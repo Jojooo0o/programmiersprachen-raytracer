@@ -13,6 +13,9 @@ public :
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
 
+	float area() const override;
+	float volume() const override;
+
 private :
 
 	glm::vec3 min_;

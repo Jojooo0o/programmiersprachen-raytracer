@@ -12,6 +12,9 @@ public :
 	glm::vec3 const& get_center() const;
 	float get_radius() const;
 
+	float area() const override;
+	float volume() const override;
+
 private :
 	
 	glm::vec3 center_;

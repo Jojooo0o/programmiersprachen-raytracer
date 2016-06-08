@@ -1,10 +1,10 @@
 #include "sphere.hpp"
 
-float shape::area(){
+float Sphere::area() const {
 	return rad_*rad_*M_PI*4;
 }
 
-float shape::volume(){
+float Sphere::volume() const {
 	return (4/3)*M_PI*rad_*rad_*rad_;
 }
 
