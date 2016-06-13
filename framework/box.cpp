@@ -1,6 +1,17 @@
 #include "box.hpp"
 
-float Box::area() const  {
+Box::Box():
+	Shape(std::string("Box"), {0.0f, 0.0f, 0.0f}),
+	min_({0.0f, 0.0f, 0.0f}),
+	max_({1.0f, 1.0f, 1.0f}) {}
+
+
+Box::Box(std::string const& name, Color const& color, glm::vec3 const& a, glm::vec3 const& b):
+	Shape(name, color),
+	min_(a),
+	max_(b) {}
+
+float Box::area() const {
 	float x = abs(max_.x - min_.x);
 	float y = abs(max_.y - min_.y);
 	float z = abs(max_.z - min_.z);
@@ -19,14 +30,6 @@ float Box::volume() const {
 
 	return x*y*z;
 }
-
-Box::Box():
-	min_({0.0f, 0.0f, 0.0f}),
-	max_({1.0f, 1.0f, 1.0f}){}
-
-Box::Box(glm::vec3 a, glm::vec3 b):
-	min_(a),
-	max_(b){}
 
 
 glm::vec3 const& Box::get_min() const{

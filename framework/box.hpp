@@ -2,13 +2,14 @@
 #define BUW_BOX_HPP
 
 #include "shape.hpp"
+#include "color.hpp"
 
 class Box: public Shape
 {
 public :
 
 	Box();
-	Box(glm::vec3, glm::vec3);
+ 	Box(std::string const&, Color const&, glm::vec3 const&, glm::vec3 const&);
 
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
