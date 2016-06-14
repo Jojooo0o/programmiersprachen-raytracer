@@ -1,4 +1,5 @@
 #include "box.hpp"
+#include <iostream>
 
 Box::Box():
 	Shape(std::string("Box"), {0.0f, 0.0f, 0.0f}),
@@ -37,4 +38,14 @@ glm::vec3 const& Box::get_min() const{
 }
 glm::vec3 const& Box::get_max() const{
 	return max_;
+}
+
+std::ostream& Box::print(std::ostream& os) const{
+	os << "Min: " << min_.x << ", " << min_.y << ", " << min_.z << std::endl;
+	os << "Min: " << max_.x << ", " << max_.y << ", " << max_.z << std::endl;
+	return os;
+}
+
+std::ostream& operator<<(std::ostream& os, Box const& b){
+	return b.print(os);
 }

@@ -3,6 +3,7 @@
 
 #include "shape.hpp"
 #include "color.hpp"
+#include <iostream>
 
 class Box: public Shape
 {
@@ -17,6 +18,8 @@ public :
 	float area() const override;
 	float volume() const override;
 
+	std::ostream& print(std::ostream&) const override;
+
 private :
 
 	glm::vec3 min_;
@@ -25,4 +28,8 @@ private :
 
 };
 
+std::ostream& operator<<(std::ostream&, Box const&);
+
 #endif //BUW_BOX_HPP
+
+

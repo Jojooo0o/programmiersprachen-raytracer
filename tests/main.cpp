@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include "sphere.hpp"
 #include "box.hpp"
+#include <iostream>
 
 
 //AUFGABE 2
@@ -33,33 +34,69 @@ TEST_CASE("sphere", "[aufgabe 2]"){
 	REQUIRE(s2.volume() == Approx((4/3)*M_PI*2*2*2));
 
 }
+//AUFGABE 5
+	TEST_CASE("box", "[aufgabe 2]"){
+		Box b1;
+		glm::vec3 b1_min{0.0f, 0.0f, 0.0f};
+		glm::vec3 b1_max{1.0f, 1.0f, 1.0f};
+		glm::vec3 b2_min{2.0f, 4.0, 2.0f};
+		glm::vec3 b2_max{4.0f, 2.0f, 4.0f};
+		Color black{0.0f, 0.0f, 0.0f};
+		Color red{1.0f, 0.0f, 0.0f};
+		std::string name2 = "box";
+		Box b2 {name2, red, b2_min, b2_max};
 
-TEST_CASE("box", "[aufgabe 2]"){
-	Box b1;
-	glm::vec3 b1_min{0.0f, 0.0f, 0.0f};
-	glm::vec3 b1_max{1.0f, 1.0f, 1.0f};
-	glm::vec3 b2_min{2.0f, 4.0, 2.0f};
-	glm::vec3 b2_max{4.0f, 2.0f, 4.0f};
-	Color black{0.0f, 0.0f, 0.0f};
-	Color red{1.0f, 0.0f, 0.0f};
-	std::string name2 = "box";
-	Box b2 {name2, red, b2_min, b2_max};
+		REQUIRE(glm::all(glm::equal(b1.get_min(), b1_min)));
+		REQUIRE(glm::all(glm::equal(b1.get_max(), b1_max)));
+		REQUIRE(b1.get_color()== black);
+		REQUIRE(b1.get_name() == "Box");
+		REQUIRE(b1.area() == Approx(6.0f));
+		REQUIRE(b1.volume() == Approx(1.0f));
 
-	REQUIRE(glm::all(glm::equal(b1.get_min(), b1_min)));
-	REQUIRE(glm::all(glm::equal(b1.get_max(), b1_max)));
-	REQUIRE(b1.get_color()== black);
-	REQUIRE(b1.get_name() == "Box");
-	REQUIRE(b1.area() == Approx(6.0f));
-	REQUIRE(b1.volume() == Approx(1.0f));
+		REQUIRE(glm::all(glm::equal(b2.get_min(), b2_min)));
+		REQUIRE(glm::all(glm::equal(b2.get_max(), b2_max)));
+		REQUIRE(b2.get_color() == red);
+		REQUIRE(b2.get_name() == "box");
+		REQUIRE(b2.area() == Approx(24.0f));
+		REQUIRE(b2.volume() == Approx(8.0f));
+	}
 
-	REQUIRE(glm::all(glm::equal(b2.get_min(), b2_min)));
-	REQUIRE(glm::all(glm::equal(b2.get_max(), b2_max)));
-	REQUIRE(b2.get_color() == red);
-	REQUIRE(b2.get_name() == "box");
-	REQUIRE(b2.area() == Approx(24.0f));
-	REQUIRE(b2.volume() == Approx(8.0f));
-}
 
+	TEST_CASE("print", "[aufgabe 4]"){
+		std::string name1 = "box";
+		std::string name2 = "sphere";
+		Color red{1.0f, 0.0f, 0.0f};
+		glm::vec3 b1_min{0.0f, 0.0f, 0.0f};
+		glm::vec3 b1_max{1.0f, 1.0f, 1.0f};
+		glm::vec3 center_s1{1.0f, 1.0f, 1.0f};
+		Box b1 {name1, red, b1_min, b1_max};
+		Sphere s1{name2, red, center_s1, 2.0f};
+
+		std::cout << s1;
+		std::cout <<b1;
+	}
+/*
+//AUFGABE 6
+	TEST_CASE("intersectRaySphere", "[intersect]"){
+		//Ray
+		glm::vec3 ray_origin{0.0, 0.0, 0.0};
+		//ray direction has to be normalized!
+		//you can use:
+		//v = glm::normalize(some_vector)
+		glm::vec3 ray_direction{0.0, 0.0, 1.0};
+
+		//Sphere
+		glm::vec3 sphere_center{0.0, 0.0, 5.0};
+		float sphere_radius{1.0};
+
+		float distance{0.0};
+		auto result = glm::intersectRayShere(
+			ray_origin, ray_direction, sphere_center, sphere_radius, distance);
+		REQUIRE(distance == Approx(4.0f));
+	}
+
+
+*/
 
 int main(int argc, char *argv[])
 {

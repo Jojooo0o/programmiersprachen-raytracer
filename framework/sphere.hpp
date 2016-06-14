@@ -17,11 +17,15 @@ public :
 	float area() const override;
 	float volume() const override;
 
+	std::ostream& print(std::ostream&) const override;
+
 private :
 	
 	glm::vec3 center_;
 	float rad_; 
 
 };
+
+std::ostream& operator<<(std::ostream&, Sphere const&);
 
 #endif //BUW_SPHERE_HPP
