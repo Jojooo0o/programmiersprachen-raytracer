@@ -12,6 +12,8 @@ public :
 	Box();
  	Box(std::string const&, Color const&, glm::vec3 const&, glm::vec3 const&);
 
+ 	
+
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
 
@@ -28,7 +30,6 @@ private :
 
 };
 
-std::ostream& operator<<(std::ostream&, Box const&);
 
 #endif //BUW_BOX_HPP
 

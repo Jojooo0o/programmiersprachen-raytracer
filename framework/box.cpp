@@ -41,11 +41,8 @@ glm::vec3 const& Box::get_max() const{
 }
 
 std::ostream& Box::print(std::ostream& os) const{
+	Shape::print(os);
 	os << "Min: " << min_.x << ", " << min_.y << ", " << min_.z << std::endl;
-	os << "Min: " << max_.x << ", " << max_.y << ", " << max_.z << std::endl;
+	os << "Max: " << max_.x << ", " << max_.y << ", " << max_.z << std::endl;
 	return os;
-}
-
-std::ostream& operator<<(std::ostream& os, Box const& b){
-	return b.print(os);
 }

@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include "color.hpp"
+#include <glm/gtx/intersect.hpp>
 
 class Shape
 {
@@ -13,6 +14,8 @@ public :
 
 	Shape();
 	Shape(std::string const&, Color const&);
+
+	~Shape();
 
 	virtual float area() const = 0;
 	virtual float volume() const = 0;

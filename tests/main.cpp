@@ -4,6 +4,7 @@
 #include <string>
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 #include "sphere.hpp"
 #include "box.hpp"
 #include <iostream>
@@ -73,9 +74,9 @@ TEST_CASE("sphere", "[aufgabe 2]"){
 		Sphere s1{name2, red, center_s1, 2.0f};
 
 		std::cout << s1;
-		std::cout <<b1;
+		std::cout << b1;
 	}
-/*
+
 //AUFGABE 6
 	TEST_CASE("intersectRaySphere", "[intersect]"){
 		//Ray
@@ -90,13 +91,57 @@ TEST_CASE("sphere", "[aufgabe 2]"){
 		float sphere_radius{1.0};
 
 		float distance{0.0};
-		auto result = glm::intersectRayShere(
-			ray_origin, ray_direction, sphere_center, sphere_radius, distance);
+		auto result = glm::intersectRaySphere(
+			ray_origin, ray_direction, sphere_center, sphere_radius*sphere_radius, distance);
 		REQUIRE(distance == Approx(4.0f));
 	}
 
+	TEST_CASE("intersect", "[aufgabe 6]"){
 
-*/
+		Ray r1;
+		std::string name2 = "sphere";
+		Color red{1.0f, 0.0f, 0.0f};
+		glm::vec3 center_s1{0.0, 5.0, 0.0};
+		Sphere s1{name2, red, center_s1, 6.0f};
+		float distance{0.0f};
+
+		auto result = s1.intersect(r1, distance);
+
+		REQUIRE(result);
+		REQUIRE(distance == Approx(11.0f));
+	}
+
+//AUFGABE 7
+	TEST_CASE("example", "[aufgabe 7 ]"){
+		Color red(255, 0, 0);
+		glm::vec3 position(0.0, 0.0, 0.0);
+
+		std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>("sphere0", red, position, 1.2f);
+		std::shared_ptr<Shape> s2 = std::make_shared<Sphere>("sphere1", red, position, 1.2f);
+
+		s1->print(std::cout);
+		s2->print(std::cout);
+	}
+
+//AUFGABE 8
+	TEST_CASE("virtual", "[aufgabe 8 ]"){
+
+		std::cout << "--------------------------------------------" << std::endl;
+		Color red(255, 0, 0);
+		glm::vec3 position(0.0, 0.0, 0.0);
+
+		Sphere* s1 = new Sphere("sphere0", red, position, 1.2f);
+		Shape* s2 = new Sphere("sphere1", red, position, 1.2f);
+
+		s1->print(std::cout);
+		s2->print(std::cout);
+
+		delete s1;
+		delete s2;
+	}
+
+
+
 
 int main(int argc, char *argv[])
 {
