@@ -9,7 +9,7 @@
 #include "box.hpp"
 #include <iostream>
 
-
+/*
 //AUFGABE 2
 TEST_CASE("sphere", "[aufgabe 2]"){
 	Sphere s1;
@@ -139,7 +139,7 @@ TEST_CASE("sphere", "[aufgabe 2]"){
 		delete s1;
 		delete s2;
 	}
-
+*/
 
 
 
