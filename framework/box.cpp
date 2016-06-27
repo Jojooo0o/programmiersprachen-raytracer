@@ -2,13 +2,13 @@
 #include <iostream>
 
 Box::Box(): //Standard Constructor
-	Shape(std::string("Box"), {0.0f, 0.0f, 0.0f}),
+	Shape(std::string("Box"), Material{}),
 	min_({0.0f, 0.0f, 0.0f}),
 	max_({1.0f, 1.0f, 1.0f}) {}
 
 //Custom Constructor
-Box::Box(std::string const& name, Color const& color, glm::vec3 const& a, glm::vec3 const& b):
-	Shape(name, color),
+Box::Box(std::string const& name, Material const& material, glm::vec3 const& a, glm::vec3 const& b):
+	Shape(name, material),
 	min_(a),
 	max_(b) {}
 //Oberflächeninhalt

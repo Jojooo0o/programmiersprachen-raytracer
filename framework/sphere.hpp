@@ -3,14 +3,14 @@
 
 #include <glm/vec3.hpp>
 #include "shape.hpp"
-#include "color.hpp"
 #include "ray.hpp"
+#include "material.hpp"
 
 class Sphere: public Shape
 {
 public :
 	Sphere();
-	Sphere(std::string const&, Color const&, glm::vec3 const&, float);
+	Sphere(std::string const&, Material const&, glm::vec3 const&, float);
 
 	~Sphere();
 

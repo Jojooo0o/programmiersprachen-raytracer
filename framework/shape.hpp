@@ -7,13 +7,15 @@
 #include <iostream>
 #include "color.hpp"
 #include <glm/gtx/intersect.hpp>
+#include "material.hpp"
+#include "ray.hpp"
 
 class Shape
 {
 public :
 
 	Shape();
-	Shape(std::string const&, Color const&);
+	Shape(std::string const&, Material const&);
 
 	~Shape();
 
@@ -21,7 +23,9 @@ public :
 	virtual float volume() const = 0;
 
 	std::string const& get_name () const;
-	Color const& get_color() const;
+	Material const& get_material() const;
+
+	virtual bool intersect(Ray const& ray, float& t) = 0;
 
 	virtual std::ostream& print(std::ostream&) const;
 
@@ -30,7 +34,7 @@ public :
 protected : 
 	
 	std::string name_;
-	Color color_;
+	Material material_;
 	
 
 };

@@ -10,11 +10,13 @@ struct Ray
 
 	Ray(glm::vec3 const& origin, glm::vec3 const& direction): 
 		origin(origin), 
-		direction(direction) {}
+		direction(glm::normalize(direction)) {}
 
 	Ray(): 
 		origin({0.0f, 0.0f, 0.0f}), 
-		direction({0.0f, 1.0f, 0.0f}) {}
+		direction({1.0f, 1.0f, 1.0f}) {
+			direction = glm::normalize(direction);
+		}
 
 };
 

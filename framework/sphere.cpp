@@ -1,14 +1,14 @@
 #include "sphere.hpp"
 
 Sphere::Sphere()://Constructor with console output
-	Shape(std::string("Sphere"), Color{0.0f, 0.0f, 0.0f}),
+	Shape(std::string("Sphere"), Material{}),
 	center_(glm::vec3{1.0f, 1.0f, 1.0f}),
 	rad_(1.0f)
 	{ std::cout << "Sphere::Constructor" << std::endl; }
 
 //Custom constructor with console output
-Sphere::Sphere(std::string const& name, Color const& color, glm::vec3 const& center, float rad):
-	Shape(name, color),
+Sphere::Sphere(std::string const& name, Material const& material, glm::vec3 const& center, float rad):
+	Shape(name, material),
 	center_(center),
 	rad_(rad){ std::cout << "Sphere::Constructor" << std::endl; }
 
