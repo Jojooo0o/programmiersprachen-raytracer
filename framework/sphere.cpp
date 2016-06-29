@@ -41,7 +41,6 @@ std::ostream& Sphere::print(std::ostream& os) const{
 //gibt true false aus, wenn strahl kugel schneidet oder nicht
 //setzt float auf abstand zwischen strahlstartpunkt u kugel
 bool Sphere::intersect (Ray const& ray, float& distance){
-	auto v = glm::normalize(ray.direction);
 	return glm::intersectRaySphere(ray.origin, v, center_, rad_*rad_, distance);
 }
 

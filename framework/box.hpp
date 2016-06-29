@@ -22,6 +22,8 @@ public :
 
 	std::ostream& print(std::ostream&) const override;
 
+	bool intersect (Ray const&, float&) override;
+
 private :
 
 	glm::vec3 min_;

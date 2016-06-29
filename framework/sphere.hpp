@@ -22,7 +22,7 @@ public :
 
 	std::ostream& print(std::ostream&) const override;
 
-	bool intersect (Ray const&, float&);
+	bool intersect (Ray const&, float&) override;
 
 private :
 	

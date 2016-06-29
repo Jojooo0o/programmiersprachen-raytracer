@@ -1,0 +1,7 @@
+Beschreibung Raytracer
+
+Vom Beobachtungspunkt aus wird ein Strahl durch jeden Pixel der Bildebene geschossen, dieser Punkt wird verfolgt und die Schnittpunkte aller Objekte in der Szene werden ermittelt.
+Der vorderste aller Schnittpunkte bestimmt die sichtbare Oberfläche des entsprechenden Objektes.
+Daraufhin wird die Helligkeit des Schnittpunktes errechnet, indem ein Strahl von Schnittpunkt zu Lichtquelle geschossen wird. Liegt ein Objekt auf diesem Strahl, so befindet sich der Schnittpunkt im Schatten.
+Sollte die Oberfläche des Objektes andere Effekte aufweisen (z.b. Spiegelung, Brechung) wird entsprechend der zuständigen Eigenschaften (Einfallswinkel = Ausfallswinkel bei Spiegelung) ein weiterer Strahl in die resultierende Richtung geschossen und wie zu Begin verfahren.
+Basierend auf der Eigenfarbe des Objektes, der Lichtquelle und anderen Effekten (z.b. Spiegelung) wird dannn der Farbwert errechnet.
