@@ -8,6 +8,7 @@
 #include "sphere.hpp"
 #include "box.hpp"
 #include <iostream>
+#include "input.hpp"
 
 /*
 //AUFGABE 2
@@ -140,6 +141,53 @@ TEST_CASE("sphere", "[aufgabe 2]"){
 		delete s2;
 	}
 */
+
+/*TEST_CASE("box intersect", "[raytracer]"){
+	Box box;
+	Ray ray {{-2.0f, 1.0f, 0.5f},{2.0f, -0.7f, 0.0f}};
+	float distance;
+	glm::vec3 min = box.get_min();
+	glm::vec3 max = box.get_max();
+
+	REQUIRE(box.intersect(ray, distance));
+	box.intersect(ray, distance);
+	std::cout << "hi" << distance << std::endl;
+
+	auto x = std::max(std::max(min.x - ray.origin.x, 0.0f), ray.origin.x - max.x);
+	auto y = std::max(std::max(min.y - ray.origin.y, 0.0f), ray.origin.y - max.y);
+	auto z = std::max(std::max(min.z - ray.origin.z, 0.0f), ray.origin.z - max.z);
+	auto entf = sqrt(x*x + y*y + z*z);
+
+	std::cout << "hi2" << entf << std::endl;
+
+}*/
+
+TEST_CASE("read sdf", "[raytracer]"){
+	/*std::ofstream file;
+	file.open("hi.txt");
+	file << "... \n";
+	file.close();*/
+	SDF scene;
+
+	std::cout<< 1 << std::endl;
+
+	scene.readInput("example.txt");
+
+	std::cout<< 2 << std::endl;
+
+	
+	std::vector<Material> v = scene.getMaterials();
+
+		
+	std::cout<< 3 << std::endl;
+
+
+	for(std::vector<Material>::iterator it = v.begin(); it != v.end(); it ++){
+		std::cout << *it;
+		std::cout << "hi";
+	}
+
+}
 
 
 

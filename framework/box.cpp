@@ -12,17 +12,17 @@ Box::Box(std::string const& name, Material const& material, glm::vec3 const& a, 
 	min_(a),
 	max_(b) 
 	{
-		if (min_.x > max.x){
+		if (min_.x > max_.x){
 			auto help = min_.x;
 			min_.x = max_.x;
 			max_.x = help;
 		}
-		if (min_.y > max.y){
+		if (min_.y > max_.y){
 			auto help = min_.y;
 			min_.y = max_.y;
 			max_.y = help;
 		}
-		if (min_.z > max.z){
+		if (min_.z > max_.z){
 			auto help = min_.z;
 			min_.z = max_.z;
 			max_.z = help;
@@ -67,24 +67,27 @@ std::ostream& Box::print(std::ostream& os) const{
 
 bool Box::intersect (Ray const& ray, float& distance){
 	float tnear,tfar;
+	float tnear_x,tnear_y,tnear_z;
 	distance = -1;
 
-	if (ray.direction_.x != 0.0)
+	if (ray.direction.x != 0.0)
 	{
-		float t0 = (min_.x - ray.origin_.x) / ray.direction_.x;
-		float t1 = (max_.x - ray.origin_.x) / ray.direction_.x;
+		float t0 = (min_.x - ray.origin.x) / ray.direction.x;
+		float t1 = (max_.x - ray.origin.x) / ray.direction.x;
+		tnear_x = std::min(t0, t1);
 		tfar = std::max(t0,t1);
 		tnear = std::min(t0,t1);
 	}
 	else 
 	{
-		if(min_.x > ray.origin_.x || max_.x < ray.origin_.x) {return false;}
+		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return false;}
 	}
 
-	if (ray.direction_.y != 0.0)
+	if (ray.direction.y != 0.0)
 	{
-		float t0 = (min_.y - ray.origin_.y) / ray.direction_.y;
-		float t1 = (max_.y - ray.origin_.y) / ray.direction_.y;
+		float t0 = (min_.y - ray.origin.y) / ray.direction.y;
+		float t1 = (max_.y - ray.origin.y) / ray.direction.y;
+		tnear_y = std::min(t0, t1);
 		float tnear = std::max(tnear, std::min(t0,t1));
 		float tfar = std::min(tfar, std::max(t0,t1));
 		if (tnear > tfar)
@@ -94,13 +97,14 @@ bool Box::intersect (Ray const& ray, float& distance){
 	}
 	else 
 	{
-		if(min_.y > ray.origin_.y || max_.y < ray.origin_.y) {return false;}
+		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return false;}
 	}
 
-	if (ray.direction_.z != 0.0)
+	if (ray.direction.z != 0.0)
 	{
-		float t0 = (min_.z - ray.origin_.z) / ray.direction_.z;
-		float t1 = (max_.z - ray.origin_.z) / ray.direction_.z;
+		float t0 = (min_.z - ray.origin.z) / ray.direction.z;
+		float t1 = (max_.z - ray.origin.z) / ray.direction.z;
+		tnear_z = std::min(t0, t1);
 		tnear = std::max(tnear, std::min(t0,t1));
 		tfar = std::min(tfar, std::max(t0,t1));
 		if (tnear > tfar)
@@ -110,11 +114,12 @@ bool Box::intersect (Ray const& ray, float& distance){
 	}
 	else 
 	{
-		if(min_.z > ray.origin_.z || max_.z < ray.origin_.z) {return false;}
+		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return false;}
 	}
 
-	distance = tnear*sqrt(ray.direction_.x*ray.direction_.x +
-					      ray.direction_.y*ray.direction_.y +
-					      ray.direction_.z*ray.direction_.z);
+
+	distance = tnear*sqrt(ray.direction.x*ray.direction.x +
+					      ray.direction.y*ray.direction.y +
+					      ray.direction.z*ray.direction.z);
 	return true;
 }
