@@ -31,7 +31,7 @@ struct Material
 
   friend std::ostream& operator<<(std::ostream& os, Material const& mat)
   {
-    os << "(" << mat.name_ << "," << mat.ka_ << "," << mat.kd_ << "," << mat.ks_ << "," << mat.m_ << ")" << std::endl;
+    os << mat.name_ << "\nAmbient: " << mat.ka_ << "Diffuse:" << mat.kd_ << "Reflection:" << mat.ks_ << mat.m_ << std::endl;
     return os;
   }
 
