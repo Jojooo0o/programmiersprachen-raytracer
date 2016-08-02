@@ -3,17 +3,13 @@
 Sphere::Sphere()://Constructor with console output
 	Shape(std::string("Sphere"), Material{}),
 	center_(glm::vec3{1.0f, 1.0f, 1.0f}),
-	rad_(1.0f)
-	{ std::cout << "Sphere::Constructor" << std::endl; }
+	rad_(1.0f) {}
 
 //Custom constructor with console output
 Sphere::Sphere(std::string const& name, Material const& material, glm::vec3 const& center, float rad):
 	Shape(name, material),
 	center_(center),
-	rad_(rad){ std::cout << "Sphere::Constructor" << std::endl; }
-
-//Desctructor
-Sphere::~Sphere() { std::cout << "Sphere::Destructor" << std::endl; }
+	rad_(rad){}
 
 //getter
 glm::vec3 const& Sphere::get_center() const{

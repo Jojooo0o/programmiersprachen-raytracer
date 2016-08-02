@@ -17,7 +17,6 @@ public :
 	Shape();
 	Shape(std::string const&, Material const&);
 
-	~Shape();
 
 	std::string const& get_name () const;
 	Material const& get_material() const;

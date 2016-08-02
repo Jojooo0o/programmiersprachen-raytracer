@@ -9,7 +9,6 @@ Shape::Shape(std::string const& name, Material const& material) :
 	name_(name),
 	material_(material){
 
-Shape::~Shape() {} //Destruktor
 
 //getter
 std::string const& Shape::get_name() const{

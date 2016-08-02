@@ -12,13 +12,9 @@ public :
 	Sphere();
 	Sphere(std::string const&, Material const&, glm::vec3 const&, float);
 
-	~Sphere();
 
 	glm::vec3 const& get_center() const;
 	float get_radius() const;
-
-	float area() const override;
-	float volume() const override;
 
 	std::ostream& print(std::ostream&) const override;
 
