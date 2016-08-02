@@ -10,15 +10,12 @@ class Box: public Shape
 public :
 
 	Box();
- 	Box(std::string const&, Material const&, glm::vec3 const&, glm::vec3 const&);
+ 	Box(std::string const&, glm::vec3 const&, glm::vec3 const&, Material const&);
 
  	
 
 	glm::vec3 const& get_min() const;
 	glm::vec3 const& get_max() const;
-
-	float area() const override;
-	float volume() const override;
 
 	std::ostream& print(std::ostream&) const override;
 

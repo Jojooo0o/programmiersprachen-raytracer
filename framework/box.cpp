@@ -7,7 +7,7 @@ Box::Box(): //Standard Constructor
 	max_({1.0f, 1.0f, 1.0f}) {}
 
 //Custom Constructor
-Box::Box(std::string const& name, Material const& material, glm::vec3 const& a, glm::vec3 const& b):
+Box::Box(std::string const& name, glm::vec3 const& a, glm::vec3 const& b, Material const& material):
 	Shape(name, material),
 	min_(a),
 	max_(b) 
@@ -29,26 +29,7 @@ Box::Box(std::string const& name, Material const& material, glm::vec3 const& a, 
 		}
 	
 	}
-//Oberflächeninhalt
-float Box::area() const {
-	float x = abs(max_.x - min_.x);
-	float y = abs(max_.y - min_.y);
-	float z = abs(max_.z - min_.z);
 
-	float a = x*y;
-	float b = x*z;
-	float c = y*z;
-
-	return 2*(a+b+c);
-}
-//Volumensberechnung
-float Box::volume() const {
-	float x = abs(max_.x - min_.x);
-	float y = abs(max_.y - min_.y);
-	float z = abs(max_.z - min_.z);
-
-	return x*y*z;
-}
 
 //Getter
 glm::vec3 const& Box::get_min() const{
