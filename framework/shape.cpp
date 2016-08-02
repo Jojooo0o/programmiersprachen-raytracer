@@ -1,15 +1,15 @@
 #include "shape.hpp"
 #include <iostream>
 
-Shape::Shape(): //Standard Constructor, with console output
+Shape::Shape():
 	name_("Shape"),
-	material_(Material{}) { std::cout << "Shape::Constructor" << std::endl; }
+	material_(Material{}) {}
 
-Shape::Shape(std::string const& name, Material const& material) : //custom constructor, wit console output
+Shape::Shape(std::string const& name, Material const& material) : 
 	name_(name),
-	material_(material){ std::cout << "Shape::Constructor" << std::endl; }
+	material_(material){
 
-Shape::~Shape() { std::cout << "Shape::Destructor" << std::endl; } //Destruktor
+Shape::~Shape() {} //Destruktor
 
 //getter
 std::string const& Shape::get_name() const{

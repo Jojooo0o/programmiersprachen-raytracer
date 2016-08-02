@@ -19,9 +19,6 @@ public :
 
 	~Shape();
 
-	virtual float area() const = 0;
-	virtual float volume() const = 0;
-
 	std::string const& get_name () const;
 	Material const& get_material() const;
 
