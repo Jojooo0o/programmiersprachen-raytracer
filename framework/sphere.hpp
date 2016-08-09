@@ -10,7 +10,7 @@ class Sphere: public Shape
 {
 public :
 	Sphere();
-	Sphere(std::string const&, Material const&, glm::vec3 const&, float);
+	Sphere(std::string const&, glm::vec3 const&, float, Material const&);
 
 
 	glm::vec3 const& get_center() const;

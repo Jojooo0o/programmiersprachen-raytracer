@@ -6,7 +6,7 @@ Sphere::Sphere()://Constructor with console output
 	rad_(1.0f) {}
 
 //Custom constructor with console output
-Sphere::Sphere(std::string const& name, Material const& material, glm::vec3 const& center, float rad):
+Sphere::Sphere(std::string const& name, glm::vec3 const& center, float rad, Material const& material):
 	Shape(name, material),
 	center_(center),
 	rad_(rad){}
@@ -19,14 +19,7 @@ glm::vec3 const& Sphere::get_center() const{
 float Sphere::get_radius() const{
 	return rad_;
 }
-//oberflaeche
-float Sphere::area() const {
-	return rad_*rad_*M_PI*4;
-}
-//volumen
-float Sphere::volume() const {
-	return (4/3)*M_PI*rad_*rad_*rad_;
-}
+
 //Printmethode
 std::ostream& Sphere::print(std::ostream& os) const{
 	Shape::print(os);

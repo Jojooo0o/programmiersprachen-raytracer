@@ -7,7 +7,7 @@ Shape::Shape():
 
 Shape::Shape(std::string const& name, Material const& material) : 
 	name_(name),
-	material_(material){
+	material_(material){}
 
 
 //getter

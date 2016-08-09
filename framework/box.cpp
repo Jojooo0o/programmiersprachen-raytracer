@@ -48,19 +48,20 @@ std::ostream& Box::print(std::ostream& os) const{
 
 bool Box::intersect (Ray const& ray, float& distance){
 	float tnear,tfar;
-	float tnear_x,tnear_y,tnear_z;
 	distance = -1;
+
+	// {0,0,0} abfangen
+	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {return false;}
 
 	if (ray.direction.x != 0.0)
 	{
 		float t0 = (min_.x - ray.origin.x) / ray.direction.x;
 		float t1 = (max_.x - ray.origin.x) / ray.direction.x;
-		tnear_x = std::min(t0, t1);
+		//tnear_x = std::min(t0, t1);
 		tfar = std::max(t0,t1);
 		tnear = std::min(t0,t1);
-	}
-	else 
-	{
+	} else {
+
 		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return false;}
 	}
 
@@ -68,17 +69,16 @@ bool Box::intersect (Ray const& ray, float& distance){
 	{
 		float t0 = (min_.y - ray.origin.y) / ray.direction.y;
 		float t1 = (max_.y - ray.origin.y) / ray.direction.y;
-		tnear_y = std::min(t0, t1);
-		float tnear = std::max(tnear, std::min(t0,t1));
-		float tfar = std::min(tfar, std::max(t0,t1));
+		//tnear_y = std::min(t0, t1);
+		tnear = std::max(tnear, std::min(t0,t1));
+		tfar = std::min(tfar, std::max(t0,t1));
 
 		if (tnear > tfar)
 		{
 			return false;
 		}
-	}
-	else 
-	{
+	} else {
+
 		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return false;}
 	}
 
@@ -86,19 +86,18 @@ bool Box::intersect (Ray const& ray, float& distance){
 	{
 		float t0 = (min_.z - ray.origin.z) / ray.direction.z;
 		float t1 = (max_.z - ray.origin.z) / ray.direction.z;
-		tnear_z = std::min(t0, t1);
+		//tnear_z = std::min(t0, t1);
 		tnear = std::max(tnear, std::min(t0,t1));
 		tfar = std::min(tfar, std::max(t0,t1));
+		
 		if (tnear > tfar)
 		{
 			return false;
 		}
-	}
-	else 
-	{
+	} else {
+
 		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return false;}
 	}
-
 
 	float x = ray.direction.x * tnear;
 	float y = ray.direction.y * tnear;

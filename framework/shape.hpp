@@ -5,8 +5,8 @@
 #include <cmath>
 #include <string>
 #include <iostream>
-#include "color.hpp"
 #include <glm/gtx/intersect.hpp>
+#include "color.hpp"
 #include "material.hpp"
 #include "ray.hpp"
 

@@ -5,6 +5,7 @@ target_link_libraries(tests
                       ${LIBRARIES}
                       )
 
+
 add_dependencies(tests glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
 add_custom_command(
