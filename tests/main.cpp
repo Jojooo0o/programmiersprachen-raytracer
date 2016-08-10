@@ -6,9 +6,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <iostream>
-//#include "scene.hpp"
+#include "scene.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "sdf_loader.cpp"
 
 TEST_CASE("sphere standardconstructor", "[sphere]"){
 	Sphere sphere;
@@ -43,8 +44,6 @@ TEST_CASE("box custom constructor", "[box]"){
 	REQUIRE(glm::all(glm::equal(box.get_max(), {4.0f, 7.0f, 8.0f})));
 }
 
-
-
 TEST_CASE("box intersect", "[raytracer]"){
 	Box box("box", {5.0f, -1.0f, -1.0f}, {10.0f, 1.0f, 1.0f}, Material{});
 	Ray ray {{0.0f, 0.0f, 0.0f},{1.0f, 0.0f, 0.0f}};
@@ -75,23 +74,30 @@ TEST_CASE("box intersect3", "[raytracer]"){
 
 }
 
-/*TEST_CASE("read sdf", "[raytracer]"){
-	std::ofstream file;
-	file.open("hi.txt");
-	file << "... \n";
-	file.close();
+TEST_CASE("Scene", "[scene]"){
+	std::map<std::string, Material> map;
+	Material mat;
+	Scene sc;
+	addMaterial(sc, mat);
+}
+
+TEST_CASE("read sdf", "[raytracer]"){
+	
 	Scene scene = readInput("../example.txt");
 
 	
-	std::vector<Material> v = scene.getMaterials();
+	std::map<std::string, Material> m = scene.materials_;
+	std::vector<std::shared_ptr<Shape>> v = scene.shapes_;
 
-		
-
-	for(std::vector<Material>::iterator it = v.begin(); it != v.end(); it ++){
-		std::cout << *it << std::endl;
+	for(std::map<std::string, Material>::iterator it = m.begin(); it != m.end(); it ++){
+		std::cout << it->second << std::endl;
 	}
 
-}*/
+	for(std::vector<std::shared_ptr<Shape>>::iterator it = v.begin(); it != v.end(); it ++){
+		std::cout << *(*it) << std::endl;
+	}
+
+}
 
 
 
