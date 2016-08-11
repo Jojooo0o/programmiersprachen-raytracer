@@ -6,6 +6,7 @@
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "light.hpp"
 
 Material createMaterial(std::stringstream& line){
 	std::string name;
@@ -80,6 +81,29 @@ std::shared_ptr<Shape> createBox(std::stringstream& line, Scene& sc){
 
 }
 
+Light createLight(std::stringstream& line){
+	std::string word;
+	std::string name;
+	float x, y, z;
+
+	line >> word; name = word;
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	glm::vec3 pos {x, y, z};
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	Color la {x, y, z};
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	Color ld {x, y, z};
+
+	Light light(name, pos, la, ld);
+	return light;
+}
+
 Scene readInput(std::string input){
 	
 	Scene sc;
@@ -102,17 +126,16 @@ Scene readInput(std::string input){
 				if(word == "material"){addMaterial(sc, createMaterial(ss)); }
 
 				else if (word == "shape"){
+
 					ss >> word;
-					if (word == "sphere"){
-						addShape(sc, createSphere(ss, sc));
-					} else if (word == "box"){
-						addShape(sc, createSphere(ss, sc));
-					}
+
+					if (word == "sphere"){addShape(sc, createSphere(ss, sc));} 
+
+					else if (word == "box"){addShape(sc, createBox(ss, sc));}
 				} 
 
-				else if (word == "light"){
+				else if (word == "light"){addLight(sc, createLight(ss));}
 
-				}
 			} else if (word == "camera"){
 
 			} else if (word == "render"){}

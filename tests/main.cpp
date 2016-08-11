@@ -88,6 +88,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 	
 	std::map<std::string, Material> m = scene.materials_;
 	std::vector<std::shared_ptr<Shape>> v = scene.shapes_;
+	std::vector<Light> l = scene.lights_;
 
 	for(std::map<std::string, Material>::iterator it = m.begin(); it != m.end(); it ++){
 		std::cout << it->second << std::endl;
@@ -96,6 +97,12 @@ TEST_CASE("read sdf", "[raytracer]"){
 	for(std::vector<std::shared_ptr<Shape>>::iterator it = v.begin(); it != v.end(); it ++){
 		std::cout << *(*it) << std::endl;
 	}
+
+	for(std::vector<Light>::iterator it = l.begin(); it != l.end(); it ++){
+		std::cout << it -> name_ << std::endl;
+	}
+
+	std::cout << "Ambient: " << scene.ambient_ << std::endl;
 
 }
 

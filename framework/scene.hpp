@@ -8,13 +8,15 @@
 #include <memory>
 #include "material.hpp"
 #include "shape.hpp"
+#include "light.hpp"
+#include "color.hpp"
 
 struct Scene
 {
-public:
 	std::vector<std::shared_ptr<Shape>> shapes_;
+	std::vector<Light> lights_;
 	std::map<std::string, Material> materials_;
-
+	Color ambient_ {0.0f, 0.0f, 0.0f};
 };
 
 void addMaterial(Scene& scene, Material const& mat){
@@ -26,6 +28,10 @@ void addShape(Scene& scene, std::shared_ptr<Shape> const& shape){
 	scene.shapes_.push_back(shape);
 }
 
+void addLight(Scene& scene, Light const& light){
+	scene.lights_.push_back(light);
+	scene.ambient_ += light.la_;
+}
+
 
 #endif
-
