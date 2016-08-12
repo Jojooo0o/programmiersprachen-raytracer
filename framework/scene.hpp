@@ -21,23 +21,13 @@ struct Scene
 	Color ambient_ {0.0f, 0.0f, 0.0f};
 };
 
-void addMaterial(Scene& scene, Material const& mat){
-	scene.materials_[mat.name_] = mat;
+void addMaterial(Scene&, Material const&);
 
-}
+void addShape(Scene&, std::shared_ptr<Shape> const&);
 
-void addShape(Scene& scene, std::shared_ptr<Shape> const& shape){
-	scene.shapes_.push_back(shape);
-}
+void addLight(Scene&, Light const&);
 
-void addLight(Scene& scene, Light const& light){
-	scene.lights_.push_back(light);
-	scene.ambient_ += light.la_;
-}
-
-void addCamera(Scene& scene, Camera const& cam){
-	scene.cameras_[cam.name_] = cam;
-}
+void addCamera(Scene&, Camera const&);
 
 
 #endif

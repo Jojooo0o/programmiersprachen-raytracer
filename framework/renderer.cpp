@@ -36,9 +36,7 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-void Renderer::render(Scene const& sc){
-  
-}
+void Renderer::render(Scene const& sc, std::string const& cam_name){}
 
 void Renderer::write(Pixel const& p)
 {

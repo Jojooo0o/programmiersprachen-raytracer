@@ -1,15 +1,7 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include "scene.hpp"
-#include "material.hpp"
-#include "shape.hpp"
-#include "sphere.hpp"
-#include "box.hpp"
-#include "light.hpp"
-#include "camera.hpp"
+#include "sdf_loader.hpp"
 
-Material createMaterial(std::stringstream& line){
+
+Material SDF_Loader::createMaterial(std::stringstream& line){
 	std::string name;
 	std::string word;
 	float r,g,b,m;
@@ -36,10 +28,9 @@ Material createMaterial(std::stringstream& line){
 	Material mat {name, ka, kd, ks, m};
 
 	return mat;
-
 }
 
-std::shared_ptr<Shape> createSphere(std::stringstream& line, Scene& sc){
+std::shared_ptr<Shape> SDF_Loader::createSphere(std::stringstream& line, Scene& sc){
 	std::string word;
 	std::string name;
 	std::string matname;
@@ -56,10 +47,9 @@ std::shared_ptr<Shape> createSphere(std::stringstream& line, Scene& sc){
 	std::shared_ptr<Shape> p(new Sphere (name, center, rad, sc.materials_[matname]));
 
 	return p;
-
 }
 
-std::shared_ptr<Shape> createBox(std::stringstream& line, Scene& sc){
+std::shared_ptr<Shape> SDF_Loader::createBox(std::stringstream& line, Scene& sc){
 		std::string word;
 		std::string name;
 		std::string matname;
@@ -79,10 +69,9 @@ std::shared_ptr<Shape> createBox(std::stringstream& line, Scene& sc){
 		std::shared_ptr<Shape> b(new Box (name, min, max, sc.materials_[matname]));
 
 		return b;
-
 }
 
-Light createLight(std::stringstream& line){
+Light SDF_Loader::createLight(std::stringstream& line){
 	std::string word;
 	std::string name;
 	float x, y, z;
@@ -105,7 +94,7 @@ Light createLight(std::stringstream& line){
 	return light;
 }
 
-Camera createCamera(std::stringstream& line){
+Camera SDF_Loader::createCamera(std::stringstream& line){
 	std::string word;
 	std::string name;
 	float fov;
@@ -118,13 +107,13 @@ Camera createCamera(std::stringstream& line){
 	return cam;
 }
 
-Scene readInput(std::string input){
+Scene SDF_Loader::readInput(){
 	
 	Scene sc;
 
 	std::string line;
 	std::string word;
-	std::ifstream file (input);
+	std::ifstream file (input_);
 
 	if(file.is_open()){
 

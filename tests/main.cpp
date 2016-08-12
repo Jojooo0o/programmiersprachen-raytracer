@@ -9,7 +9,7 @@
 #include "scene.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
-#include "sdf_loader.cpp"
+#include "sdf_loader.hpp"
 
 TEST_CASE("sphere standardconstructor", "[sphere]"){
 	Sphere sphere;
@@ -83,9 +83,10 @@ TEST_CASE("Scene", "[scene]"){
 
 TEST_CASE("read sdf", "[raytracer]"){
 	
-	Scene scene = readInput("../example.txt");
+	SDF_Loader input("../example.txt");
+	Scene scene = input.readInput();
 
-	
+
 	std::map<std::string, Material> m = scene.materials_;
 	std::vector<std::shared_ptr<Shape>> v = scene.shapes_;
 	std::vector<Light> l = scene.lights_;
