@@ -36,7 +36,20 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-void Renderer::render(Scene const& sc, std::string const& cam_name){}
+void Renderer::render(Scene& sc, std::string const& cam_name){
+
+  Camera cam = sc.cameras_[cam_name];
+
+  for(unsigned y = 0; y < height_; ++y){
+    for (unsigned x = 0; x < width_; ++x){
+      Pixel(x,y);
+
+
+
+    }
+  }
+
+}
 
 void Renderer::write(Pixel const& p)
 {

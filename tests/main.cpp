@@ -97,7 +97,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 	}
 
 	for(std::vector<std::shared_ptr<Shape>>::iterator it = v.begin(); it != v.end(); it ++){
-		std::cout << *(*it) << std::endl;
+		std::cout << **it << std::endl;
 	}
 
 	for(std::vector<Light>::iterator it = l.begin(); it != l.end(); it ++){
@@ -107,7 +107,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 	std::cout << "Ambient: " << scene.ambient_ << std::endl;
 
 	for(std::map<std::string, Camera>::iterator it = c.begin(); it != c.end(); it ++){
-		std::cout << it->first << std::endl;
+		std::cout << it->first << it -> second.distance_ << std::endl;
 	}
 
 }

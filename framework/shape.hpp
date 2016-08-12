@@ -21,7 +21,7 @@ public :
 	std::string const& get_name () const;
 	Material const& get_material() const;
 
-	virtual bool intersect(Ray const& ray, float& t) = 0;
+	virtual bool intersect(Ray const&, float&) = 0;
 
 	virtual std::ostream& print(std::ostream&) const;
 

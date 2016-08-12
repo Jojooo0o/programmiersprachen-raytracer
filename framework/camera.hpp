@@ -3,6 +3,7 @@
 
 #include <glm/vec3.hpp>
 #include <string>
+#include <cmath>
 
 class Camera{
 
@@ -10,16 +11,22 @@ public:
 
 	Camera():
 		name_("Camera"),
-		fov_x_(0.0f),
+		angle_(0.0f),
+		distance_(0.0f),
 		pos_({0.0f, 0.0f, 0.0f}){}
 
 	Camera(std::string const& name, float fov, glm::vec3 const& pos):
 		name_(name),
-		fov_x_(fov),
-		pos_(pos) {}
+		angle_(fov),
+		distance_(0.0f),
+		pos_(pos) {
+			float rad = (angle_ * M_PI)/360;
+			distance_ = 0.5/(std::tan(rad));
+		}
 
 	std::string name_;
-	float fov_x_;
+	float angle_;
+	float distance_;	//distance to pixel canvas
 	glm::vec3 pos_;
 
 };

@@ -11,6 +11,8 @@
 #include "light.hpp"
 #include "color.hpp"
 #include "camera.hpp"
+#include "box.hpp"
+#include "sphere.hpp"
 
 struct Scene
 {

@@ -57,7 +57,6 @@ bool Box::intersect (Ray const& ray, float& distance){
 	{
 		float t0 = (min_.x - ray.origin.x) / ray.direction.x;
 		float t1 = (max_.x - ray.origin.x) / ray.direction.x;
-		//tnear_x = std::min(t0, t1);
 		tfar = std::max(t0,t1);
 		tnear = std::min(t0,t1);
 	} else {
@@ -69,7 +68,6 @@ bool Box::intersect (Ray const& ray, float& distance){
 	{
 		float t0 = (min_.y - ray.origin.y) / ray.direction.y;
 		float t1 = (max_.y - ray.origin.y) / ray.direction.y;
-		//tnear_y = std::min(t0, t1);
 		tnear = std::max(tnear, std::min(t0,t1));
 		tfar = std::min(tfar, std::max(t0,t1));
 
@@ -86,7 +84,6 @@ bool Box::intersect (Ray const& ray, float& distance){
 	{
 		float t0 = (min_.z - ray.origin.z) / ray.direction.z;
 		float t1 = (max_.z - ray.origin.z) / ray.direction.z;
-		//tnear_z = std::min(t0, t1);
 		tnear = std::max(tnear, std::min(t0,t1));
 		tfar = std::min(tfar, std::max(t0,t1));
 		
