@@ -2,6 +2,7 @@
 #define RAY_HPP
 
 #include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 
 struct Ray
 {

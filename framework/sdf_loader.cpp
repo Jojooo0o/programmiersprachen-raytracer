@@ -7,6 +7,7 @@
 #include "sphere.hpp"
 #include "box.hpp"
 #include "light.hpp"
+#include "camera.hpp"
 
 Material createMaterial(std::stringstream& line){
 	std::string name;
@@ -104,6 +105,19 @@ Light createLight(std::stringstream& line){
 	return light;
 }
 
+Camera createCamera(std::stringstream& line){
+	std::string word;
+	std::string name;
+	float fov;
+
+	line >> word; name = word;
+	line >> word; fov = std::stof(word);
+
+	glm::vec3 pos{0.0f, 0.0f, 0.0f};
+	Camera cam(name, fov, pos);
+	return cam;
+}
+
 Scene readInput(std::string input){
 	
 	Scene sc;
@@ -132,14 +146,17 @@ Scene readInput(std::string input){
 					if (word == "sphere"){addShape(sc, createSphere(ss, sc));} 
 
 					else if (word == "box"){addShape(sc, createBox(ss, sc));}
+
 				} 
 
 				else if (word == "light"){addLight(sc, createLight(ss));}
 
-			} else if (word == "camera"){
+				else if (word == "camera"){addCamera(sc, createCamera(ss));} 
+			} 
 
-			} else if (word == "render"){}
+			else if (word == "render"){}
 		}
+
 		file.close();
 	}
 

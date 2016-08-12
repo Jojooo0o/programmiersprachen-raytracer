@@ -89,6 +89,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 	std::map<std::string, Material> m = scene.materials_;
 	std::vector<std::shared_ptr<Shape>> v = scene.shapes_;
 	std::vector<Light> l = scene.lights_;
+	std::map<std::string, Camera> c = scene.cameras_;
 
 	for(std::map<std::string, Material>::iterator it = m.begin(); it != m.end(); it ++){
 		std::cout << it->second << std::endl;
@@ -103,6 +104,10 @@ TEST_CASE("read sdf", "[raytracer]"){
 	}
 
 	std::cout << "Ambient: " << scene.ambient_ << std::endl;
+
+	for(std::map<std::string, Camera>::iterator it = c.begin(); it != c.end(); it ++){
+		std::cout << it->first << std::endl;
+	}
 
 }
 
