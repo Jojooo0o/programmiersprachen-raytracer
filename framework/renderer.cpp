@@ -66,3 +66,18 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
+
+
+std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
+
+  std::map<float, Hit> hits;
+
+  for(auto it = shapes.begin(); it != shapes.end(); it ++){
+    Hit hit = (**it).intersect(ray);
+    hits[hit.distance_] = hit;
+
+  }
+  
+  return hits;
+
+}

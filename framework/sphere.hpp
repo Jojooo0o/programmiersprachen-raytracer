@@ -2,6 +2,7 @@
 #define BUW_SPHERE_HPP
 
 #include <glm/vec3.hpp>
+#include <glm/gtx/intersect.hpp>
 #include "shape.hpp"
 #include "ray.hpp"
 #include "material.hpp"
@@ -18,7 +19,7 @@ public :
 
 	std::ostream& print(std::ostream&) const override;
 
-	bool intersect (Ray const&, float&) override;
+	Hit intersect(Ray const&) override;
 
 private :
 	

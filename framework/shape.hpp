@@ -5,10 +5,10 @@
 #include <cmath>
 #include <string>
 #include <iostream>
-#include <glm/gtx/intersect.hpp>
 #include "color.hpp"
 #include "material.hpp"
 #include "ray.hpp"
+#include "hit.hpp"
 
 class Shape
 {
@@ -21,7 +21,7 @@ public :
 	std::string const& get_name () const;
 	Material const& get_material() const;
 
-	virtual bool intersect(Ray const&, float&) = 0;
+	virtual Hit intersect(Ray const&) = 0;
 
 	virtual std::ostream& print(std::ostream&) const;
 

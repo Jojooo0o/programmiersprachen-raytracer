@@ -46,12 +46,15 @@ std::ostream& Box::print(std::ostream& os) const{
 	return os;
 }
 
-bool Box::intersect (Ray const& ray, float& distance){
+Hit Box::intersect (Ray const& ray){
 	float tnear,tfar;
-	distance = -1;
+	bool hit;
+	float distance = -1;
+	glm::vec3 normvec;
+	glm::vec3 intersec;
 
 	// {0,0,0} abfangen
-	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {return false;}
+	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {hit = false;}
 
 	if (ray.direction.x != 0.0)
 	{
@@ -61,7 +64,7 @@ bool Box::intersect (Ray const& ray, float& distance){
 		tnear = std::min(t0,t1);
 	} else {
 
-		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return false;}
+		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {hit = false;}
 	}
 
 	if (ray.direction.y != 0.0)
@@ -73,11 +76,11 @@ bool Box::intersect (Ray const& ray, float& distance){
 
 		if (tnear > tfar)
 		{
-			return false;
+			hit = false;
 		}
 	} else {
 
-		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return false;}
+		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {hit = false;}
 	}
 
 	if (ray.direction.z != 0.0)
@@ -89,11 +92,11 @@ bool Box::intersect (Ray const& ray, float& distance){
 		
 		if (tnear > tfar)
 		{
-			return false;
+			hit = false;
 		}
 	} else {
 
-		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return false;}
+		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {hit = false;}
 	}
 
 	float x = ray.direction.x * tnear;
@@ -102,5 +105,16 @@ bool Box::intersect (Ray const& ray, float& distance){
 
 	distance = sqrt(x*x + y*y + z*z);
 	
-	return true;
+	hit = true;
+
+	intersec = ray.direction * distance;
+
+	if(intersec.x == min_.x || intersec.x == max_.x){normvec = {1.0f, 0.0f, 0.0f};}
+	else if (intersec.y == min_.y || intersec.y == max_.y){normvec = {0.0f, 1.0f, 0.0f};}
+	else if (intersec.z == min_.z || intersec.z == max_.z){normvec = {0.0f, 0.0f, 1.0f};}
+	
+	Hit hi (hit, distance, intersec, normvec, material_.name_);
+	return hi;
+
+
 }

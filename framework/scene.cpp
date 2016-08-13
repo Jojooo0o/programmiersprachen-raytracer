@@ -16,5 +16,5 @@ void addLight(Scene& scene, Light const& light){
 }
 
 void addCamera(Scene& scene, Camera const& cam){
-	scene.cameras_[cam.name_] = cam;
+	scene.cameras_[cam.get_name()] = cam;
 }

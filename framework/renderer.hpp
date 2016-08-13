@@ -14,8 +14,13 @@
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
 #include "scene.hpp"
+#include "shape.hpp"
+#include "box.hpp"
+#include "sphere.hpp"
+#include "hit.hpp"
 #include <string>
 #include <glm/glm.hpp>
+#include <map>
 
 class Renderer
 {
@@ -25,6 +30,9 @@ public:
   void render();
   void render(Scene&, std::string const&);
   void write(Pixel const& p);
+
+  std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
+
 
   inline std::vector<Color> const& colorbuffer() const
   {

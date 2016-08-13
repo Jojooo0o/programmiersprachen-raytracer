@@ -44,7 +44,7 @@ TEST_CASE("box custom constructor", "[box]"){
 	REQUIRE(glm::all(glm::equal(box.get_max(), {4.0f, 7.0f, 8.0f})));
 }
 
-TEST_CASE("box intersect", "[raytracer]"){
+/*TEST_CASE("box intersect", "[raytracer]"){
 	Box box("box", {5.0f, -1.0f, -1.0f}, {10.0f, 1.0f, 1.0f}, Material{});
 	Ray ray {{0.0f, 0.0f, 0.0f},{1.0f, 0.0f, 0.0f}};
 	float distance;
@@ -72,7 +72,7 @@ TEST_CASE("box intersect3", "[raytracer]"){
 
 	REQUIRE(test == false);
 
-}
+}*/
 
 TEST_CASE("Scene", "[scene]"){
 	std::map<std::string, Material> map;
@@ -107,7 +107,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 	std::cout << "Ambient: " << scene.ambient_ << std::endl;
 
 	for(std::map<std::string, Camera>::iterator it = c.begin(); it != c.end(); it ++){
-		std::cout << it->first << it -> second.distance_ << std::endl;
+		std::cout << it->first << it -> second.get_distance() << std::endl;
 	}
 
 }
