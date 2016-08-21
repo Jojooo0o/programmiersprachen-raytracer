@@ -56,13 +56,12 @@ void Renderer::render(std::string const& cam_name){
       
       //transform pixel coordinates to camera coordinates
 
-      float height = (float)height_;
       float width = (float)width_;      
       float half_height = (float)height_ / 2;
       float half_width = (float)width_ / 2;
 
       float x1 = ((float)x - half_width)/width;
-      float y1 = ((float)y - half_height)/height;
+      float y1 = ((float)y - half_height)/width;
 
       Ray camRay = cam.createRay(x1, y1);
       std::map<float, Hit> camHits = findHit(scene_.shapes_, camRay);
