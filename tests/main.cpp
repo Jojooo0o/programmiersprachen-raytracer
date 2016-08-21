@@ -6,10 +6,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <iostream>
+#include <memory>
 #include "scene.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
 #include "sdf_loader.hpp"
+#include "hit.hpp"
+#include "renderer.hpp"
 
 TEST_CASE("sphere standardconstructor", "[sphere]"){
 	Sphere sphere;
@@ -20,7 +23,7 @@ TEST_CASE("sphere standardconstructor", "[sphere]"){
 }
 
 TEST_CASE("sphere custom constructor", "[sphere]"){
-	Sphere sphere("sphere", {3.0f, 5.5f, -2.0f}, 10.0f, Material{});
+	Sphere sphere("sphere", {3.0f, 5.5f, -2.0f}, 10.0f, "black");
 	
 	std::cout << sphere << std::endl;
 
@@ -37,42 +40,41 @@ TEST_CASE("box standardconstructor", "[box]"){
 }
 
 TEST_CASE("box custom constructor", "[box]"){
-	Box box("box", {4.0f, 6.0f, -7.0f}, {2.0f, 7.0f, 8.0f}, Material{});
+	Box box("box", {4.0f, 6.0f, -7.0f}, {2.0f, 7.0f, 8.0f}, "flieder");
 	std::cout << box << std::endl;
 
 	REQUIRE(glm::all(glm::equal(box.get_min(), {2.0f, 6.0f, -7.0f})));
 	REQUIRE(glm::all(glm::equal(box.get_max(), {4.0f, 7.0f, 8.0f})));
 }
 
-/*TEST_CASE("box intersect", "[raytracer]"){
-	Box box("box", {5.0f, -1.0f, -1.0f}, {10.0f, 1.0f, 1.0f}, Material{});
+TEST_CASE("box intersect", "[raytracer]"){
+	Box box("box", {5.0f, -1.0f, -1.0f}, {10.0f, 1.0f, 1.0f}, "soulblack");
 	Ray ray {{0.0f, 0.0f, 0.0f},{1.0f, 0.0f, 0.0f}};
-	float distance;
-	
-	REQUIRE(box.intersect(ray, distance));
-	std::cout << "hi" << distance << std::endl;
+	Hit hit = box.intersect(ray);
+
+	REQUIRE(hit.hit_);
+
+	std::cout << "hi" << hit.distance_ << std::endl;
 
 }
 
 TEST_CASE("box intersect2", "[raytracer]"){
 	Box box;
 	Ray ray {{-2.0f, 1.0f, 0.5f},{2.0f, -0.7f, 0.0f}};
-	float distance;
-	
-	REQUIRE(box.intersect(ray, distance));
-	std::cout << "hi" << distance << std::endl;
+	Hit hit = box.intersect(ray);
+	REQUIRE(hit.hit_);
+	std::cout << "hi" << hit.distance_ << std::endl;
 
 }
 
 TEST_CASE("box intersect3", "[raytracer]"){
 	Box box;
 	Ray ray{{0.0f, 0.0f, 5.0f}, {-1.0f, 0.0f, 0.0f}};
-	float direction;
-	bool test = box.intersect(ray, direction);
+	Hit hit = box.intersect(ray);
 
-	REQUIRE(test == false);
+	REQUIRE(!hit.hit_);
 
-}*/
+}
 
 TEST_CASE("Scene", "[scene]"){
 	std::map<std::string, Material> map;
@@ -109,6 +111,37 @@ TEST_CASE("read sdf", "[raytracer]"){
 	for(std::map<std::string, Camera>::iterator it = c.begin(); it != c.end(); it ++){
 		std::cout << it->first << it -> second.get_distance() << std::endl;
 	}
+
+}
+
+TEST_CASE("findHit", "[hit]"){
+	std::shared_ptr<Shape> s1(new Sphere ("s1", {0.0f, 0.0f, 0.0f}, 1.0f, "black"));
+	std::shared_ptr<Shape> s2(new Sphere ("s2", {2.0f, 0.0f, 0.0f}, 1.0f, "black"));
+	std::shared_ptr<Shape> s3(new Sphere ("s3", {4.0f, 0.0f, 0.0f}, 1.0f, "black"));
+
+	std::vector<std::shared_ptr<Shape>> vec;
+	vec.push_back(s1);
+	vec.push_back(s2);
+	vec.push_back(s3);
+
+	Ray ray {{-2.0f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}};
+
+	std::map<float, Hit> hit  = findHit(vec, ray);
+
+	std::cout << "hello" << std::endl;
+
+	for(auto it = hit.begin(); it != hit.end(); it ++){
+		std::cout << "hi";
+		std::cout << it->first << std::endl;
+	}
+
+	bool bla = true;
+
+	for(auto it = hit.begin(); it != hit.end(); it ++){
+		bla = it->second.hit_;
+	}
+
+	REQUIRE(bla);
 
 }
 

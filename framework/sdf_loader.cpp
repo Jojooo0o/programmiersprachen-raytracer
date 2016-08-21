@@ -44,7 +44,7 @@ std::shared_ptr<Shape> SDF_Loader::createSphere(std::stringstream& line, Scene& 
 	line >> word; rad = std::stof(word);
 	line >> word; matname = word;
 
-	std::shared_ptr<Shape> p(new Sphere (name, center, rad, sc.materials_[matname]));
+	std::shared_ptr<Shape> p(new Sphere (name, center, rad, matname));
 
 	return p;
 }
@@ -66,7 +66,7 @@ std::shared_ptr<Shape> SDF_Loader::createBox(std::stringstream& line, Scene& sc)
 		glm::vec3 max {x, y, z};
 		line >> word; matname = word;
 
-		std::shared_ptr<Shape> b(new Box (name, min, max, sc.materials_[matname]));
+		std::shared_ptr<Shape> b(new Box (name, min, max, matname));
 
 		return b;
 }

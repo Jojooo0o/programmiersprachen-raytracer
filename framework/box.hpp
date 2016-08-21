@@ -10,7 +10,7 @@ class Box: public Shape
 public :
 
 	Box();
- 	Box(std::string const&, glm::vec3 const&, glm::vec3 const&, Material const&);
+ 	Box(std::string const&, glm::vec3 const&, glm::vec3 const&, std::string const&);
 
  	
 

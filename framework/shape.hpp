@@ -15,11 +15,11 @@ class Shape
 public :
 
 	Shape();
-	Shape(std::string const&, Material const&);
+	Shape(std::string const&, std::string const&);
 
 
 	std::string const& get_name () const;
-	Material const& get_material() const;
+	std::string const& get_material() const;
 
 	virtual Hit intersect(Ray const&) = 0;
 
@@ -30,8 +30,7 @@ public :
 protected : 
 	
 	std::string name_;
-	Material material_;
-	
+	std::string material_;
 
 };
 

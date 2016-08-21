@@ -11,6 +11,7 @@
 #define BUW_RENDERER_HPP
 
 #include "color.hpp"
+#include "ray.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
 #include "scene.hpp"
@@ -31,8 +32,6 @@ public:
   void render(Scene&, std::string const&);
   void write(Pixel const& p);
 
-  std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
-
 
   inline std::vector<Color> const& colorbuffer() const
   {
@@ -46,5 +45,8 @@ private:
   std::string filename_;
   PpmWriter ppm_;
 };
+
+std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
+
 
 #endif // #ifndef BUW_RENDERER_HPP

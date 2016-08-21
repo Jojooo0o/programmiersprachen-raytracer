@@ -1,12 +1,12 @@
 #include "sphere.hpp"
 
 Sphere::Sphere()://Constructor with console output
-	Shape(std::string("Sphere"), Material{}),
+	Shape(std::string("Sphere"), std::string("material")),
 	center_(glm::vec3{1.0f, 1.0f, 1.0f}),
 	rad_(1.0f) {}
 
 //Custom constructor with console output
-Sphere::Sphere(std::string const& name, glm::vec3 const& center, float rad, Material const& material):
+Sphere::Sphere(std::string const& name, glm::vec3 const& center, float rad, std::string const& material):
 	Shape(name, material),
 	center_(center),
 	rad_(rad){}
@@ -35,7 +35,7 @@ Hit Sphere::intersect (Ray const& ray){
 	glm::vec3 intersec = ray.direction * distance;
 	glm::vec3 normvec = intersec - center_;
 
-	Hit hi (hit, distance, intersec, normvec, material_.name_);
+	Hit hi (hit, distance, intersec, normvec, material_);
 	return hi;
 }
 

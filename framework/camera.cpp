@@ -15,9 +15,12 @@ Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos):
 		distance_ = 0.5/(std::tan(rad));
 	}
 
-glm::vec3 Camera::createRay(float x, float y) const{
-	glm::vec3 vector {x, y, distance_};
-	return vector;
+Ray Camera::createRay(float x, float y) const{
+	float xf = (float)x;
+	float yf = (float)y;
+	glm::vec3 vector {xf, yf, distance_};
+	Ray ray{pos_, vector};
+	return ray;
 }
 
 std::string Camera::get_name() const{

@@ -43,7 +43,15 @@ void Renderer::render(Scene& sc, std::string const& cam_name){
   for(unsigned y = 0; y < height_; ++y){
     for (unsigned x = 0; x < width_; ++x){
       Pixel(x,y);
+      Ray camRay = cam.createRay(x, y);
+      std::map<float, Hit> camHits = findHit(sc.shapes_, camRay);
+      auto it = camHits.begin();
+      Hit firstHit = it->second;
 
+      for(auto it = sc.lights_.begin(); it != sc.lights_.end(); ++ it){
+        
+      }
+      
 
 
     }

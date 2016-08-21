@@ -2,12 +2,12 @@
 #include <iostream>
 
 Box::Box(): //Standard Constructor
-	Shape(std::string("Box"), Material{}),
+	Shape(std::string("Box"), std::string("material")),
 	min_({0.0f, 0.0f, 0.0f}),
 	max_({1.0f, 1.0f, 1.0f}) {}
 
 //Custom Constructor
-Box::Box(std::string const& name, glm::vec3 const& a, glm::vec3 const& b, Material const& material):
+Box::Box(std::string const& name, glm::vec3 const& a, glm::vec3 const& b, std::string const& material):
 	Shape(name, material),
 	min_(a),
 	max_(b) 
@@ -48,13 +48,14 @@ std::ostream& Box::print(std::ostream& os) const{
 
 Hit Box::intersect (Ray const& ray){
 	float tnear,tfar;
-	bool hit;
+	bool hit = true;
 	float distance = -1;
 	glm::vec3 normvec;
 	glm::vec3 intersec;
+	Hit hi(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, "");
 
 	// {0,0,0} abfangen
-	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {hit = false;}
+	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {return hi;}
 
 	if (ray.direction.x != 0.0)
 	{
@@ -64,7 +65,7 @@ Hit Box::intersect (Ray const& ray){
 		tnear = std::min(t0,t1);
 	} else {
 
-		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {hit = false;}
+		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return hi;}
 	}
 
 	if (ray.direction.y != 0.0)
@@ -76,11 +77,11 @@ Hit Box::intersect (Ray const& ray){
 
 		if (tnear > tfar)
 		{
-			hit = false;
+			return hi;
 		}
 	} else {
 
-		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {hit = false;}
+		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return hi;}
 	}
 
 	if (ray.direction.z != 0.0)
@@ -92,11 +93,11 @@ Hit Box::intersect (Ray const& ray){
 		
 		if (tnear > tfar)
 		{
-			hit = false;
+			return hi;
 		}
 	} else {
 
-		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {hit = false;}
+		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
 	}
 
 	float x = ray.direction.x * tnear;
@@ -105,15 +106,18 @@ Hit Box::intersect (Ray const& ray){
 
 	distance = sqrt(x*x + y*y + z*z);
 	
-	hit = true;
-
 	intersec = ray.direction * distance;
 
 	if(intersec.x == min_.x || intersec.x == max_.x){normvec = {1.0f, 0.0f, 0.0f};}
 	else if (intersec.y == min_.y || intersec.y == max_.y){normvec = {0.0f, 1.0f, 0.0f};}
 	else if (intersec.z == min_.z || intersec.z == max_.z){normvec = {0.0f, 0.0f, 1.0f};}
+
+	hi.hit_ = hit;
+	hi.distance_ = distance;
+	hi.intersec_ = intersec;
+	hi.normvec_ = normvec;
+	hi.matname_ = material_;
 	
-	Hit hi (hit, distance, intersec, normvec, material_.name_);
 	return hi;
 
 

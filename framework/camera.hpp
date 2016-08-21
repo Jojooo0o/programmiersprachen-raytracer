@@ -4,6 +4,7 @@
 #include <glm/vec3.hpp>
 #include <string>
 #include <cmath>
+#include "ray.hpp"
 
 class Camera{
 
@@ -13,7 +14,7 @@ public:
 
 	Camera(std::string const& name, float fov, glm::vec3 const& pos);
 
-	glm::vec3 createRay(float, float) const;
+	Ray createRay(float, float) const;
 
 	std::string get_name() const;
 	float get_angle() const;
