@@ -11,3 +11,11 @@ target_link_libraries(raytracer ${FRAMEWORK_NAME} ${LIBRARIES})
 add_dependencies(raytracer glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
 install(TARGETS raytracer DESTINATION .)
+
+add_executable(try try.cpp)
+
+target_link_libraries(try ${FRAMEWORK_NAME} ${LIBRARIES})
+add_dependencies(try glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
+
+install(TARGETS try DESTINATION .)
+

@@ -22,14 +22,16 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <map>
+#include <iostream>
 
 class Renderer
 {
 public:
   Renderer(unsigned w, unsigned h, std::string const& file);
+  Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene);
 
   void render();
-  void render(Scene&, std::string const&);
+  void render(std::string const&);
   void write(Pixel const& p);
 
 
@@ -44,6 +46,7 @@ private:
   std::vector<Color> colorbuffer_;
   std::string filename_;
   PpmWriter ppm_;
+  Scene scene_;
 };
 
 std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);

@@ -33,7 +33,7 @@ Hit Sphere::intersect (Ray const& ray){
 	float distance;
 	bool hit = glm::intersectRaySphere(ray.origin, ray.direction, center_, rad_*rad_, distance);
 	glm::vec3 intersec = ray.direction * distance;
-	glm::vec3 normvec = intersec - center_;
+	glm::vec3 normvec = glm::normalize(intersec - center_);
 
 	Hit hi (hit, distance, intersec, normvec, material_);
 	return hi;

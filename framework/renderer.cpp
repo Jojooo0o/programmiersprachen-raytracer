@@ -9,12 +9,22 @@
 
 #include "renderer.hpp"
 
+Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene)
+  : width_(w)
+  , height_(h)
+  , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
+  , filename_(file)
+  , ppm_(width_, height_)
+  , scene_(scene)
+{}
+
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
   , height_(h)
   , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
   , filename_(file)
   , ppm_(width_, height_)
+  , scene_()
 {}
 
 void Renderer::render()
@@ -26,7 +36,7 @@ void Renderer::render()
       Pixel p(x,y);
       if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
         p.color = Color(0.0, 1.0, float(x)/height_);
-      } else {
+      } else { 
         p.color = Color(1.0, 0.0, float(y)/width_);
       }
 
@@ -36,24 +46,50 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-void Renderer::render(Scene& sc, std::string const& cam_name){
+void Renderer::render(std::string const& cam_name){
 
-  Camera cam = sc.cameras_[cam_name];
+  Camera cam = scene_.cameras_[cam_name];
 
   for(unsigned y = 0; y < height_; ++y){
     for (unsigned x = 0; x < width_; ++x){
-      Pixel(x,y);
-      Ray camRay = cam.createRay(x, y);
-      std::map<float, Hit> camHits = findHit(sc.shapes_, camRay);
-      auto it = camHits.begin();
-      Hit firstHit = it->second;
-
-      for(auto it = sc.lights_.begin(); it != sc.lights_.end(); ++ it){
-        
-      }
+      Pixel p(x,y);
       
+      //transform pixel coordinates to camera coordinates
 
+      float height = (float)height_;
+      float width = (float)width_;      
+      float half_height = (float)height_ / 2;
+      float half_width = (float)width_ / 2;
 
+      float x1 = ((float)x - half_width)/width;
+      float y1 = ((float)y - half_height)/height;
+
+      Ray camRay = cam.createRay(x1, y1);
+      std::map<float, Hit> camHits = findHit(scene_.shapes_, camRay);
+
+      if(camHits.empty()){
+        p.color = scene_.ambient_;
+      } else {
+
+        auto it = camHits.begin();
+        Hit firstHit = it->second;
+        Material mat = scene_.materials_[firstHit.matname_];
+
+       for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
+        glm::vec3 lightRay = (*it).position_ - firstHit.intersec_; 
+        lightRay = glm::normalize(lightRay);
+        Color color{};
+        color.r += mat.ka_.r * (*it).la_.r + mat.kd_.r * (*it).ld_.r * glm::dot(firstHit.normvec_, lightRay);
+        color.g += mat.ka_.g * (*it).la_.g + mat.kd_.g * (*it).ld_.g * glm::dot(firstHit.normvec_, lightRay);
+        color.b += mat.ka_.b * (*it).la_.b + mat.kd_.b * (*it).ld_.b * glm::dot(firstHit.normvec_, lightRay);
+        
+        p.color = color;
+       }
+      }
+
+      write(p);
+
+      
     }
   }
 
@@ -82,7 +118,9 @@ std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const& shapes, 
 
   for(auto it = shapes.begin(); it != shapes.end(); it ++){
     Hit hit = (**it).intersect(ray);
-    hits[hit.distance_] = hit;
+    if (hit.hit_){
+     hits[hit.distance_] = hit;
+    }
 
   }
   
