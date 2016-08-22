@@ -49,16 +49,16 @@ void Renderer::render()
 void Renderer::render(std::string const& cam_name){
 
   Camera cam = scene_.cameras_[cam_name];
+  float width = (float)width_;      
+  float half_height = ((float)height_) / 2;
+  float half_width = ((float)width_) / 2;
 
   for(unsigned y = 0; y < height_; ++y){
     for (unsigned x = 0; x < width_; ++x){
       Pixel p(x,y);
+      Color color{};
       
-      //transform pixel coordinates to camera coordinates
-
-      float width = (float)width_;      
-      float half_height = (float)height_ / 2;
-      float half_width = (float)width_ / 2;
+      //transform pixel coordinates to camera coordinates     
 
       float x1 = ((float)x - half_width)/width;
       float y1 = ((float)y - half_height)/width;
@@ -67,27 +67,38 @@ void Renderer::render(std::string const& cam_name){
       std::map<float, Hit> camHits = findHit(scene_.shapes_, camRay);
 
       if(camHits.empty()){
-        p.color = scene_.ambient_;
+        color = scene_.ambient_;
       } else {
 
         auto it = camHits.begin();
         Hit firstHit = it->second;
         Material mat = scene_.materials_[firstHit.matname_];
 
-       for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
-        glm::vec3 lightRay = (*it).position_ - firstHit.intersec_; 
-        lightRay = glm::normalize(lightRay);
-        Color color{};
-        color.r += mat.ka_.r * (*it).la_.r + mat.kd_.r * (*it).ld_.r * glm::dot(firstHit.normvec_, lightRay);
-        color.g += mat.ka_.g * (*it).la_.g + mat.kd_.g * (*it).ld_.g * glm::dot(firstHit.normvec_, lightRay);
-        color.b += mat.ka_.b * (*it).la_.b + mat.kd_.b * (*it).ld_.b * glm::dot(firstHit.normvec_, lightRay);
-        
-        p.color = color;
-       }
+        for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
+          glm::vec3 lightVec = (*it).position_ - firstHit.intersec_; 
+          lightVec = glm::normalize(lightVec);
+
+          Ray lightRay {(firstHit.intersec_ + 0.0001f * lightVec), lightVec};
+          std::map<float, Hit> lightHits = findHit(scene_.shapes_, lightRay);
+
+          
+
+        //Shadows
+          if(lightHits.empty()){
+            
+            color.r += mat.ka_.r * (*it).la_.r + mat.kd_.r * (*it).ld_.r * glm::dot(firstHit.normvec_, lightRay.direction);
+            color.g += mat.ka_.g * (*it).la_.g + mat.kd_.g * (*it).ld_.g * glm::dot(firstHit.normvec_, lightRay.direction);
+            color.b += mat.ka_.b * (*it).la_.b + mat.kd_.b * (*it).ld_.b * glm::dot(firstHit.normvec_, lightRay.direction);
+          } else {
+            color.r += mat.ka_.r * (*it).la_.r; 
+            color.g += mat.ka_.g * (*it).la_.g;
+            color.b += mat.ka_.b * (*it).la_.b;
+          }
+
+        }
       }
-
+      p.color = color;
       write(p);
-
       
     }
   }

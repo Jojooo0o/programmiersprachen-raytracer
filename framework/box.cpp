@@ -48,7 +48,9 @@ std::ostream& Box::print(std::ostream& os) const{
 }
 
 Hit Box::intersect (Ray const& ray){
-	float tnear,tfar, t0, t1;
+	float t0, t1;
+	float tnear = 0.0f;
+	float tfar = 0.0f;
 	bool hit = true;
 	float distance = -1;
 	glm::vec3 normvec;
@@ -64,6 +66,12 @@ Hit Box::intersect (Ray const& ray){
 		t1 = (max_.x - ray.origin.x) / ray.direction.x;
 		tfar = std::max(t0,t1);
 		tnear = std::min(t0,t1);
+
+		if (tnear > tfar)
+		{
+			return hi;
+		}
+
 	} else {
 
 		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return hi;}
@@ -81,6 +89,7 @@ Hit Box::intersect (Ray const& ray){
 		{
 			return hi;
 		}
+
 	} else {
 
 		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return hi;}
@@ -97,17 +106,22 @@ Hit Box::intersect (Ray const& ray){
 		{
 			return hi;
 		}
+
 	} else {
 
 		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
 	}
 
+	if(tnear < 0.0) {return hi;}
 	
 	intersec = ray.direction * tnear;
 
-	if(intersec.x == Approx(min_.x) || intersec.x == Approx(max_.x)){normvec = {1.0f, 0.0f, 0.0f};}
-	else if (intersec.y == Approx(min_.y) || intersec.y == Approx(max_.y)){normvec = {0.0f, 1.0f, 0.0f};}
-	else if (intersec.z == Approx(min_.z) || intersec.z == Approx(max_.z)){normvec = {0.0f, 0.0f, 1.0f};}
+	if(intersec.x == Approx(min_.x)) {normvec = {-1.0f, 0.0f, 0.0f};}
+	else if (intersec.x == Approx(max_.x)) {normvec = {1.0f, 0.0f, 0.0f};}
+	else if (intersec.y == Approx(min_.y)) {normvec = {0.0f, -1.0f, 0.0f};}
+	else if (intersec.y == Approx(max_.y)) {normvec = {0.0f, 1.0f, 0.0f};}
+	else if (intersec.z == Approx(min_.z)) {normvec = {0.0f, 0.0f, -1.0f};}
+	else if (intersec.z == Approx(max_.z)) {normvec = {0.0f, 0.0f, 1.0f};}
 
 	hi.hit_ = hit;
 	hi.distance_ = tnear;
