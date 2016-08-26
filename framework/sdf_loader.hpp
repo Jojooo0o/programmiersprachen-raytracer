@@ -26,6 +26,7 @@ public:
 	std::shared_ptr<Shape> createBox(std::stringstream& line, Scene& sc);
 	Light createLight(std::stringstream& line);
 	Camera createCamera(std::stringstream& line);
+	std::shared_ptr<Shape> createComposite(std::stringstream& line, Scene& sc);
 	Scene readInput(std::string input);
 
 

@@ -8,8 +8,8 @@
 
 int main(int argc, char* argv[])
 {
-  unsigned const width = 1000;
-  unsigned const height = 1000;
+  unsigned const width = 600;
+  unsigned const height = 600;
   std::string const filename = "test.ppm";
 
   SDF_Loader input("../example.txt");

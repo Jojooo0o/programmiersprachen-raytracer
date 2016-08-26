@@ -1,11 +1,14 @@
 define material red 1 0 0 1 0 0 1 0 0 1
 define material blue 0 0 1 0 0 1 0 0 1 1
 define material green 0 1 0 0 1 0 0 1 0 1
-#define shape box rbottom 0 0 -110 10 10 -100 red
-define shape box box -50 50 -110 -40 60 -100 green
-define shape sphere bsphere 0 0 -150 30 blue
-define shape sphere sphere2 100 0 -150 30 blue
-define light sun 1000 700 0 0.2 0.2 0.2 0.8 0.8 0.8
+define shape box rbottom -100 -20 0 100 -15 -800 red
+define shape box box -10 0 -305 -20 -10 -330 green
+define shape sphere bsphere 0 0 -300 10 blue
+define shape sphere asphere 0 30 -400 10 blue
+define shape sphere sphere2 30 0 -500 10 blue
+#define shape composite test bsphere asphere
+define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
 #define light sun2 -1000 700 0 0.2 0.2 0.2 0.8 0.8 0.8
 
-define camera cam 90.0
+
+define camera cam 10.0

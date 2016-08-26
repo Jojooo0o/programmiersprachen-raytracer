@@ -8,6 +8,7 @@ void addMaterial(Scene& scene, Material const& mat){
 
 void addShape(Scene& scene, std::shared_ptr<Shape> const& shape){
 	scene.shapes_.push_back(shape);
+	addObject(scene, shape);
 }
 
 void addLight(Scene& scene, Light const& light){
@@ -17,4 +18,8 @@ void addLight(Scene& scene, Light const& light){
 
 void addCamera(Scene& scene, Camera const& cam){
 	scene.cameras_[cam.get_name()] = cam;
+}
+
+void addObject(Scene& scene, std::shared_ptr<Shape> const& object){
+	scene.objects_[object->get_name()] = object;
 }

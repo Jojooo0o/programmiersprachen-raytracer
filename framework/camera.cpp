@@ -17,7 +17,8 @@ Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos):
 
 Ray Camera::createRay(float x, float y) const{
 	glm::vec3 vector {x, y, -distance_};
-	Ray ray{pos_, vector};
+	glm::vec3 direction = vector - pos_;
+	Ray ray{pos_, direction};
 	return ray;
 }
 

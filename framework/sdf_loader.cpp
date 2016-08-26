@@ -71,6 +71,23 @@ std::shared_ptr<Shape> SDF_Loader::createBox(std::stringstream& line, Scene& sc)
 		return b;
 }
 
+std::shared_ptr<Shape> SDF_Loader::createComposite(std::stringstream& line, Scene& sc){
+	std::string word;
+	std::string name;
+	std::string objectname;
+	std::vector<std::shared_ptr<Shape>> objects;
+
+	line >> word; name = word;
+	while(line >> word){
+		objectname = word;
+		objects.push_back(sc.objects_[objectname]);
+	}
+
+	std::shared_ptr<Shape> composite(new Composite (name, objects));
+
+	return composite;
+}
+
 Light SDF_Loader::createLight(std::stringstream& line){
 	std::string word;
 	std::string name;
@@ -107,6 +124,8 @@ Camera SDF_Loader::createCamera(std::stringstream& line){
 	return cam;
 }
 
+
+
 Scene SDF_Loader::readInput(){
 	
 	Scene sc;
@@ -132,7 +151,9 @@ Scene SDF_Loader::readInput(){
 
 					ss >> word;
 
-					if (word == "sphere"){addShape(sc, createSphere(ss, sc));} 
+					if ( word == "composite"){addObject(sc, createComposite(ss, sc));}
+
+					else if (word == "sphere"){addShape(sc, createSphere(ss, sc));} 
 
 					else if (word == "box"){addShape(sc, createBox(ss, sc));}
 
