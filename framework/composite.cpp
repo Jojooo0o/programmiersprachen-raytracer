@@ -1,4 +1,5 @@
 #include "composite.hpp"
+#include <iostream>
 
 Composite::Composite()://Standard Constructer
 	Shape(std::string("Composite"), std::string("")),
@@ -18,10 +19,12 @@ Hit Composite::intersect(Ray const& ray){
 }
 
 std::ostream& Composite::print(std::ostream& os) const{
-	std::cout << "Name: " << name_ << std::endl;
-	std::cout << "Objects: " << std::endl;
-	for(auto it = shapes_.begin(); it != shapes_.end(); it++){
-		std::cout << "hai" << std::endl;
-		std::cout << (*it)->get_name() << std::endl;
+	os << "Name: " << name_ << std::endl;
+	os << "Objects: " << std::endl;
+	for(auto it = shapes_.begin(); it != shapes_.end(); ++it){
+		os << (**it) << std::endl;
 	}
+
+	return os;
+
 }

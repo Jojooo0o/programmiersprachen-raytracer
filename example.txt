@@ -6,7 +6,7 @@ define shape box box -10 0 -305 -20 -10 -330 green
 define shape sphere bsphere 0 0 -300 10 blue
 define shape sphere asphere 0 30 -400 10 blue
 define shape sphere sphere2 30 0 -500 10 blue
-#define shape composite test bsphere asphere
+define shape composite test bsphere asphere
 define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
 #define light sun2 -1000 700 0 0.2 0.2 0.2 0.8 0.8 0.8
 

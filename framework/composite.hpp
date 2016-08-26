@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <iostream>
 #include "shape.hpp"
 #include "hit.hpp"
 
@@ -16,9 +17,9 @@ public:
 
 	void add_shape(std::shared_ptr<Shape>);
 
-	Hit intersect(Ray const&) override;
+	std::ostream& print(std::ostream&) const override;
 
-	std::ostream& print(std::ostream& os) const override;
+	Hit intersect(Ray const&) override;
 
 
 private:

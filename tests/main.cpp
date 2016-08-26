@@ -113,16 +113,25 @@ TEST_CASE("read sdf", "[raytracer]"){
 	for(std::map<std::string, Camera>::iterator it = c.begin(); it != c.end(); it ++){
 		std::cout << it->first << it -> second.get_distance() << std::endl;
 	}
-	/*
-	for(std::map<std::string, std::shared_ptr<Shape>>::iterator it = object.begin(); it != object.end(); it ++){
+	
+	std::cout << "Objects" << std::endl;
+	for(auto it = object.begin(); it != object.end(); it ++){
 		std::shared_ptr<Shape> derp = it -> second;
 		std::cout << *derp << std::endl;
 	}
-	*/
+	
 }
 TEST_CASE("composite", "[composite]"){
 	std::shared_ptr<Shape> box(new Box ());
 	std::shared_ptr<Shape> sphere(new Sphere ());
+	std::vector<std::shared_ptr<Shape>> p;
+
+	p.push_back(box);
+	p.push_back(sphere);
+
+	Composite comp("Test", p);
+
+	std::cout << comp << std::endl;
 }
 
 

@@ -14,6 +14,8 @@ public:
 
 	Camera(std::string const& name, float fov, glm::vec3 const& pos);
 
+	Camera(std::string const& name, float fov, glm::vec3 const& pos, glm::vec3 const& dir, glm::vec3 const& up);
+
 	Ray createRay(float, float) const;
 
 	std::string get_name() const;
@@ -28,6 +30,8 @@ private:
 	float angle_;
 	float distance_;	//distance to pixel canvas
 	glm::vec3 pos_;
+	glm::vec3 dir_;
+	glm::vec3 up_;
 
 };
 
