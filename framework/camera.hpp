@@ -1,7 +1,7 @@
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 #include <string>
 #include <cmath>
 #include "ray.hpp"
@@ -16,7 +16,8 @@ public:
 
 	Camera(std::string const& name, float fov, glm::vec3 const& pos, glm::vec3 const& dir, glm::vec3 const& up);
 
-	Ray createRay(float, float) const;
+	Ray createRay(float, float);
+	glm::mat4 createMatrix();
 
 	std::string get_name() const;
 	float get_angle() const;

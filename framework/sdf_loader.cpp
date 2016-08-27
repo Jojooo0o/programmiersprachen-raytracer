@@ -114,13 +114,24 @@ Light SDF_Loader::createLight(std::stringstream& line){
 Camera SDF_Loader::createCamera(std::stringstream& line){
 	std::string word;
 	std::string name;
-	float fov;
+	float fov, x, y, z;
 
 	line >> word; name = word;
 	line >> word; fov = std::stof(word);
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	glm::vec3 pos {x, y, z};
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	glm::vec3 dir {x, y, z};
+	line >> word; x = std::stof(word);
+	line >> word; y = std::stof(word);
+	line >> word; z = std::stof(word);
+	glm::vec3 up {x, y, z};
 
-	glm::vec3 pos{0.0f, 0.0f, 0.0f};
-	Camera cam(name, fov, pos);
+	Camera cam(name, fov, pos, dir, up);
 	return cam;
 }
 
