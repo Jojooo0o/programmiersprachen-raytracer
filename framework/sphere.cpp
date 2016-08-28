@@ -1,4 +1,5 @@
 #include "sphere.hpp"
+#include <catch.hpp>
 
 Sphere::Sphere()://Constructor with console output
 	Shape(std::string("Sphere"), std::string("material")),
@@ -30,17 +31,19 @@ std::ostream& Sphere::print(std::ostream& os) const{
 //gibt true false aus, wenn strahl kugel schneidet oder nicht
 //setzt float auf abstand zwischen strahlstartpunkt u kugel
 Hit Sphere::intersect (Ray const& ray){
+	Ray trans_ray = ray.transformRay(world_transform_);
 	float distance;
+	glm::vec3 intersec, normvec;
 	bool hit = glm::intersectRaySphere(ray.origin, ray.direction, center_, rad_, distance);
 
-	if(hit){
-		glm::vec3 intersec = ray.direction * distance;
-		glm::vec3 normvec = glm::normalize(intersec - center_);
+	if(hit && distance >= 0){
+		intersec = ray.origin + ray.direction * distance;
+		normvec = glm::normalize(intersec - center_);
 
-		Hit hi (hit, distance, intersec, normvec, material_);
+		Hit hi (hit, distance, intersec, normvec, material_, "sphere");
 		return hi;
 	} else {
-		Hit hi(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, "");
+		Hit hi{};
 		return hi;
 	}
 }

@@ -11,13 +11,14 @@
 struct Hit{
 
 	Hit();
-	Hit(bool, float, glm::vec3 const&, glm::vec3 const&, std::string const&);
+	Hit(bool, float, glm::vec3 const&, glm::vec3 const&, std::string const&, std::string const&);
 
 	bool hit_;
 	float distance_;
 	glm::vec3 intersec_;
 	glm::vec3 normvec_;
 	std::string matname_;
+	std::string type_;
 };
 
 

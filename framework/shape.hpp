@@ -1,10 +1,13 @@
 #ifndef BUW_SHAPE_HPP
 #define BUW_SHAPE_HPP
 
-#include <glm/vec3.hpp>
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
 #include <cmath>
 #include <string>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 #include "color.hpp"
 #include "material.hpp"
 #include "ray.hpp"
@@ -23,6 +26,10 @@ public :
 
 	virtual Hit intersect(Ray const&) = 0;
 
+	virtual void scale(float);
+	virtual void rotate(float, glm::vec3 const&);
+	virtual void translate(glm::vec3 const&);
+
 	virtual std::ostream& print(std::ostream&) const;
 
 
@@ -31,9 +38,18 @@ protected :
 	
 	std::string name_;
 	std::string material_;
+	glm::mat4 world_transform_;
 
 };
 
 std::ostream& operator<<(std::ostream&, Shape const&);
 
 #endif //BUW_SHAPE_HPP
+
+/*TODO:
+-INVERSE
+-TRANSPONIERTE INVERSE
+-COMPOSITE
+-SDF LOADER
+
+*/

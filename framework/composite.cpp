@@ -14,7 +14,7 @@ void Composite::add_shape(std::shared_ptr<Shape> shape) {
 } 
 
 Hit Composite::intersect(Ray const& ray){
-	Hit hi(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, "");
+	Hit hi{};
 	return hi;
 }
 

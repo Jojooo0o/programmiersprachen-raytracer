@@ -49,7 +49,7 @@ private:
   Scene scene_;
 };
 
-std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
+Hit findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
 
 
 #endif // #ifndef BUW_RENDERER_HPP

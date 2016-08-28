@@ -55,7 +55,7 @@ Hit Box::intersect (Ray const& ray){
 	float distance = -1;
 	glm::vec3 normvec;
 	glm::vec3 intersec;
-	Hit hi(false, 0.0f, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, "");
+	Hit hi{};
 
 	// {0,0,0} abfangen
 	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {return hi;}
@@ -114,7 +114,7 @@ Hit Box::intersect (Ray const& ray){
 
 	if(tnear < 0.0) {return hi;}
 	
-	intersec = ray.direction * tnear;
+	intersec = ray.origin + ray.direction * tnear;
 
 	if(intersec.x == Approx(min_.x)) {normvec = {-1.0f, 0.0f, 0.0f};}
 	else if (intersec.x == Approx(max_.x)) {normvec = {1.0f, 0.0f, 0.0f};}
@@ -128,6 +128,7 @@ Hit Box::intersect (Ray const& ray){
 	hi.intersec_ = intersec;
 	hi.normvec_ = normvec;
 	hi.matname_ = material_;
+	hi.type_ = "box";
 	
 	return hi;
 
