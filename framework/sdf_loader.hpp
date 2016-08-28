@@ -27,6 +27,7 @@ public:
 	Light createLight(std::stringstream& line);
 	Camera createCamera(std::stringstream& line);
 	std::shared_ptr<Shape> createComposite(std::stringstream& line, Scene& sc);
+	void transform(std::stringstream& line, Scene& sc);
 	Scene readInput(std::string input);
 
 

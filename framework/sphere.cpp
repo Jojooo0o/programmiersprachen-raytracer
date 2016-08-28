@@ -31,16 +31,17 @@ std::ostream& Sphere::print(std::ostream& os) const{
 //gibt true false aus, wenn strahl kugel schneidet oder nicht
 //setzt float auf abstand zwischen strahlstartpunkt u kugel
 Hit Sphere::intersect (Ray const& ray){
-	Ray trans_ray = ray.transformRay(world_transform_);
+	Ray trans_ray = ray.transformRay(inv_);
 	float distance;
 	glm::vec3 intersec, normvec;
-	bool hit = glm::intersectRaySphere(ray.origin, ray.direction, center_, rad_, distance);
+	bool hit = glm::intersectRaySphere(trans_ray.origin, trans_ray.direction, center_, rad_, distance);
 
 	if(hit && distance >= 0){
-		intersec = ray.origin + ray.direction * distance;
+		intersec = trans_ray.origin + trans_ray.direction * distance;
 		normvec = glm::normalize(intersec - center_);
 
 		Hit hi (hit, distance, intersec, normvec, material_, "sphere");
+		hi.transformHit(world_transform_, trans_inv_);
 		return hi;
 	} else {
 		Hit hi{};

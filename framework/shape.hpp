@@ -23,6 +23,7 @@ public :
 
 	std::string const& get_name () const;
 	std::string const& get_material() const;
+	glm::mat4 const& get_matrix() const;
 
 	virtual Hit intersect(Ray const&) = 0;
 
@@ -39,6 +40,8 @@ protected :
 	std::string name_;
 	std::string material_;
 	glm::mat4 world_transform_;
+	glm::mat4 trans_inv_;
+	glm::mat4 inv_;
 
 };
 

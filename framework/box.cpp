@@ -47,7 +47,8 @@ std::ostream& Box::print(std::ostream& os) const{
 	return os;
 }
 
-Hit Box::intersect (Ray const& ray){
+Hit Box::intersect (Ray const& original){
+	Ray ray = original.transformRay(inv_);
 	float t0, t1;
 	float tnear = 0.0f;
 	float tfar = 0.0f;
@@ -129,6 +130,7 @@ Hit Box::intersect (Ray const& ray){
 	hi.normvec_ = normvec;
 	hi.matname_ = material_;
 	hi.type_ = "box";
+	hi.transformHit(world_transform_, trans_inv_);
 	
 	return hi;
 

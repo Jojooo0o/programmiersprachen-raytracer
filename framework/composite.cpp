@@ -26,5 +26,23 @@ std::ostream& Composite::print(std::ostream& os) const{
 	}
 
 	return os;
+}
+
+void Composite::scale(float s){
+	for(auto it = shapes_.begin(); it != shapes_.end(); ++it){
+		(**it).scale(s);
+	}
+}
+
+void Composite::rotate(float grad, glm::vec3 const& r){
+	for(auto it = shapes_.begin(); it != shapes_.end(); ++it){
+		(**it).rotate(grad, r);
+	}
+}
+
+void Composite::translate(glm::vec3 const& t){
+	for(auto it = shapes_.begin(); it != shapes_.end(); ++it){
+		(**it).translate(t);
+	}
 
 }

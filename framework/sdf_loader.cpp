@@ -135,6 +135,35 @@ Camera SDF_Loader::createCamera(std::stringstream& line){
 	return cam;
 }
 
+void SDF_Loader::transform(std::stringstream& line, Scene& sc){
+	std::string word;
+	std::string name;
+	float s, grad, x, y, z;
+
+	line >> word; name = word;
+	std::shared_ptr<Shape> shape = sc.objects_[name];
+
+	line >> word;
+	if(word == "scale"){
+		line >> word; s = std::stof(word); 
+		shape -> scale(s);
+	} else if (word == "rotate"){
+		line >> word; grad = std::stof(word);
+		line >> word; x = std::stof(word);
+		line >> word; y = std::stof(word);
+		line >> word; z = std::stof(word);
+		glm::vec3 r {x, y, z};
+		shape -> rotate(grad, r);
+	} else if (word == "translate"){
+		line >> word; x = std::stof(word);
+		line >> word; y = std::stof(word);
+		line >> word; z = std::stof(word);
+		glm::vec3 t {x, y, z};
+		shape -> translate(t);
+	}
+
+}
+
 
 
 Scene SDF_Loader::readInput(){
@@ -174,6 +203,7 @@ Scene SDF_Loader::readInput(){
 
 				else if (word == "camera"){addCamera(sc, createCamera(ss));} 
 			} 
+			else if (word == "transform"){transform(ss, sc);}
 
 			else if (word == "render"){}
 		}

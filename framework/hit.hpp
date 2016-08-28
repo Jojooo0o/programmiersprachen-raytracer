@@ -13,6 +13,8 @@ struct Hit{
 	Hit();
 	Hit(bool, float, glm::vec3 const&, glm::vec3 const&, std::string const&, std::string const&);
 
+	void transformHit(glm::mat4 const&, glm::mat4 const&);
+
 	bool hit_;
 	float distance_;
 	glm::vec3 intersec_;

@@ -132,8 +132,44 @@ TEST_CASE("composite", "[composite]"){
 	Composite comp("Test", p);
 
 	std::cout << comp << std::endl;
+
+	comp.rotate(90.0, {1.0f, 0.0f, 0.0f});
+	auto mat = box->get_matrix();
+
+	for(int i = 0; i != 4; i ++){
+		glm::vec4 v (mat[i]);
+		std::cout << v.x << " , " << v.y << " , " << v.z << " , " << v.w << std::endl;
+
+	}
+
 }
 
+/*TEST_CASE("shape", "[World transform]"){
+	Sphere sphere;
+	//sphere.scale(2.0f);
+	sphere.rotate(90.0, {1.0f, 0.0f, 0.0f});
+	auto mat = sphere.get_matrix();
+
+
+	for(int i = 0; i != 4; i ++){
+		glm::vec4 v (mat[i]);
+		std::cout << v.x << " , " << v.y << " , " << v.z << " , " << v.w << std::endl;
+
+	}
+
+}*/
+
+/*TEST_CASE("transform", "[matrix]"){
+	Sphere sphere;
+	glm::vec4 point (0.0f, 1.0f, 0.0f, 1.0f);
+	glm::vec3 axis (1.0f, 0.0f, 0.0f);
+	sphere.scale(2.0f);
+	sphere.rotate(90.0f, axis);
+
+	point = sphere.get_matrix() * point;
+	glm::vec3 transformed(point);
+	std::cout << transformed.x << " , " << transformed.y << " , " << transformed.z << std::endl;
+}
 
 /*
 TEST_CASE("findHit", "[hit]"){

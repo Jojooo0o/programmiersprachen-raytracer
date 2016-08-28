@@ -21,6 +21,9 @@ public:
 
 	Hit intersect(Ray const&) override;
 
+	void scale(float) override;
+	void rotate(float, glm::vec3 const&) override;
+	void translate(glm::vec3 const&) override;
 
 private:
 	std::vector<std::shared_ptr<Shape>> shapes_;
