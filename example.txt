@@ -1,6 +1,6 @@
-define material red 1 0 0 1 0 0 1 0 0 1
-define material blue 0 0 1 0 0 1 0 0 1 1
-define material green 0 1 0 0 1 0 0 1 0 1
+define material red 1 0 0 1 0 0 0.5 0 0 10
+define material blue 0 0 1 0 0 1 0 0 0.5 10
+define material green 0 1 0 0 1 0 0 0.5 0 10
 define shape box rbottom -100 -20 0 100 -15 -800 red
 define shape box box -10 -10 -400 0 0 -430 green
 define shape sphere bsphere 0 0 -400 10 blue
@@ -19,5 +19,5 @@ transform bsphere scale 2
 transform bsphere translate 2 -18 100
 
 #define camera cam 30 0 0 -200 0 0 -1 0 1 0
-define camera cam 10.0 0 0 -1000 0 0 1 0 1 0
+#define camera cam 10.0 0 0 -1000 0 0 1 0 1 0
 #define camera cam 20 400 0 -420 -1 0 0 0 1 0

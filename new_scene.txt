@@ -1,24 +1,25 @@
 #NEW SCENE
 
-define camera cam 20 0 300 0 0 -1 0 0 0 -1
+#define camera cam 20 0 300 0 0 -1 0 0 0 -1
 #define camera cam 20 0 -300 0 0 1 0 0 0 -1
 #define camera cam 20 0 0 300 0 0 -1 0 1 0
 #define camera cam 20 0 0 -300 0 0 1 0 1 0
-#define camera cam 20 300 0 0 -1 0 0 0 1 0
+define camera cam 20 300 0 0 -1 0 0 0 1 0
 #define camera cam 20 -300 0 0 1 0 0 0 1 0
 
-define material red 1 0 0 1 0 0 1 0 0 1
-define material blue 0 0 1 0 0 1 0 0 1 1
-define material green 0 1 0 0 1 0 0 1 0 1
+define material red 1 0 0 1 0 0 1 0 0 10
+define material blue 0 0 1 0 0 1 0 0 1 100
+define material green 0 1 0 0 1 0 0 1 0 10
 
-define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
-define light sun2 0 0 -1000 0.2 0.2 0.2 0.8 0.8 0.8
+#define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
+#define light sun2 0 0 -1000 0.2 0.2 0.2 0.8 0.8 0.8
+define light sun3 0 1000 0 0.2 0.2 0.2 0.8 0.8 0.8
 
 define shape box box -10 -10 -10 10 10 10 red
 define shape sphere sphere -20 10 0 100 green
 
-transform box rotate 20 1 1 2
-transform sphere  scale 1.2
+transform box rotate 70 1 1 2
+transform sphere scale 1.2
 transform box translate 10 0 0
 
-#scaling sphere inverted
+#camera buggy

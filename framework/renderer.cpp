@@ -74,6 +74,10 @@ void Renderer::render(std::string const& cam_name){
         //Hit firstHit = it->second;
         Material mat = scene_.materials_[camHit.matname_];
 
+        color.r += mat.ka_.r * scene_.ambient_.r; 
+        color.g += mat.ka_.g * scene_.ambient_.g;
+        color.b += mat.ka_.b * scene_.ambient_.b;
+
         for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
           glm::vec3 lightVec = (*it).position_ - camHit.intersec_; 
           lightVec = glm::normalize(lightVec);
@@ -83,24 +87,22 @@ void Renderer::render(std::string const& cam_name){
           if(camHit.type_ == "sphere"){
             lightRay = {camHit.intersec_+ 0.01f * lightVec, lightVec};
           } else if(camHit.type_ == "box"){
-            lightRay = {(camHit.intersec_ + 0.0001f * lightVec), lightVec};
+            lightRay = {(camHit.intersec_ + 0.01f * lightVec), lightVec};
           }
           Hit lightHits = findHit(scene_.shapes_, lightRay);
+
+          glm::vec3 spec_light = glm::reflect(lightVec, camHit.normvec_);
+          float r_v_ = pow(glm::dot(glm::normalize(camRay.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
 
           
 
         //Shadows
           if(!lightHits.hit_){
             
-            color.r += mat.ka_.r * (*it).la_.r + mat.kd_.r * (*it).ld_.r * glm::dot(camHit.normvec_, lightRay.direction);
-            color.g += mat.ka_.g * (*it).la_.g + mat.kd_.g * (*it).ld_.g * glm::dot(camHit.normvec_, lightRay.direction);
-            color.b += mat.ka_.b * (*it).la_.b + mat.kd_.b * (*it).ld_.b * glm::dot(camHit.normvec_, lightRay.direction);
-          } else {
-            color.r += mat.ka_.r * (*it).la_.r; 
-            color.g += mat.ka_.g * (*it).la_.g;
-            color.b += mat.ka_.b * (*it).la_.b;
+            color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
+            color.g += mat.kd_.g * (*it).ld_.g * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.g * r_v_);
+            color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
           }
-
         }
       }
       p.color = color;
@@ -152,13 +154,14 @@ Hit findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
   for(auto it = shapes.begin(); it != shapes.end(); it ++){
     Hit hit = (**it).intersect(ray);
     if (hit.hit_){
+      hit.distance_ = glm::distance(hit.intersec_, ray.origin);
       if(firstHit.distance_ > hit.distance_){
         firstHit = hit;
       }
     }
 
   }
-  //firstHit.distance_ = glm::distance(firstHit.intersec_, ray.origin);
+  
   return firstHit;
 
 }
