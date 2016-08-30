@@ -59,8 +59,8 @@ Ray Camera::createRay(float x, float y){
 	//vector = createMatrix() * vector;
 	//glm::vec3 direction {vector.x, vector.y, vector.z};
 	Ray ray{origin, direction};
-	Ray transformed = ray.transformRay(createMatrix());
-	return transformed;
+	Ray transformed_ray = ray.transformRay(createMatrix());
+	return transformed_ray;
 }
 
 std::string Camera::get_name() const{

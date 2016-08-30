@@ -32,6 +32,16 @@ TEST_CASE("sphere custom constructor", "[sphere]"){
 	REQUIRE(sphere.get_radius() == Approx(10.0f));
 }
 
+TEST_CASE("sphere intersect", "[hi]"){
+	Sphere sphere;
+	Ray ray{};
+	float distance;
+
+	Hit hit = sphere.intersect(ray);
+
+	REQUIRE(hit.hit_);
+}
+
 TEST_CASE("box standardconstructor", "[box]"){
 	Box box;
 	std::cout << box << std::endl;
@@ -84,7 +94,7 @@ TEST_CASE("Scene", "[scene]"){
 	addMaterial(sc, mat);
 }
 
-TEST_CASE("read sdf", "[raytracer]"){
+/*TEST_CASE("read sdf", "[raytracer]"){
 	
 	SDF_Loader input("../example.txt");
 	Scene scene = input.readInput();
@@ -120,7 +130,7 @@ TEST_CASE("read sdf", "[raytracer]"){
 		std::cout << *derp << std::endl;
 	}
 	
-}
+}*/
 TEST_CASE("composite", "[composite]"){
 	std::shared_ptr<Shape> box(new Box ());
 	std::shared_ptr<Shape> sphere(new Sphere ());
@@ -144,7 +154,7 @@ TEST_CASE("composite", "[composite]"){
 
 }
 
-/*TEST_CASE("shape", "[World transform]"){
+TEST_CASE("shape", "[World transform]"){
 	Sphere sphere;
 	//sphere.scale(2.0f);
 	sphere.rotate(90.0, {1.0f, 0.0f, 0.0f});
@@ -157,22 +167,23 @@ TEST_CASE("composite", "[composite]"){
 
 	}
 
-}*/
+}
 
-/*TEST_CASE("transform", "[matrix]"){
+TEST_CASE("transform", "[matrix]"){
 	Sphere sphere;
 	glm::vec4 point (0.0f, 1.0f, 0.0f, 1.0f);
 	glm::vec3 axis (1.0f, 0.0f, 0.0f);
 	sphere.scale(2.0f);
-	sphere.rotate(90.0f, axis);
+	//sphere.rotate(90.0f, axis);
+	sphere.translate({1.0f, 0.0f, 0.0f});
 
 	point = sphere.get_matrix() * point;
 	glm::vec3 transformed(point);
 	std::cout << transformed.x << " , " << transformed.y << " , " << transformed.z << std::endl;
 }
 
-/*
-TEST_CASE("findHit", "[hit]"){
+
+/*TEST_CASE("findHit", "[hit]"){
 	std::shared_ptr<Shape> s1(new Sphere ("s1", {0.0f, 0.0f, 0.0f}, 1.0f, "black"));
 	std::shared_ptr<Shape> s2(new Sphere ("s2", {2.0f, 0.0f, 0.0f}, 1.0f, "black"));
 	std::shared_ptr<Shape> s3(new Sphere ("s3", {4.0f, 0.0f, 0.0f}, 1.0f, "black"));
@@ -201,8 +212,8 @@ TEST_CASE("findHit", "[hit]"){
 
 	REQUIRE(bla);
 
-}
-*/
+}*/
+
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);

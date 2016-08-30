@@ -4,15 +4,20 @@ define material green 0 1 0 0 1 0 0 1 0 1
 define shape box rbottom -100 -20 0 100 -15 -800 red
 define shape box box -10 -10 -400 0 0 -430 green
 define shape sphere bsphere 0 0 -400 10 blue
-define shape sphere asphere 0 30 -450 10 blue
-define shape sphere sphere2 30 0 -500 10 blue
+#define shape sphere asphere 0 30 -450 10 blue
+#define shape sphere sphere2 30 0 -500 10 blue
 define shape composite test bsphere asphere
 define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
 #define light sun2 -1000 700 0 0.2 0.2 0.2 0.8 0.8 0.8
 
 transform box rotate 1.0 1 0 0
-transform box scale 0.99
-transform box translate 150 0 -50
+#transform box scale 0.99
+#transform box translate 5 0 -50
 
-define camera cam 50.0 200 0 -450 -1 0 0 0 1 0
-#define camera cam 10.0 0 0 -1000 0 0 1 0 1 0
+transform bsphere rotate 1.0 1 0 0
+transform bsphere scale 2
+transform bsphere translate 2 -18 100
+
+#define camera cam 30 0 0 -200 0 0 -1 0 1 0
+define camera cam 10.0 0 0 -1000 0 0 1 0 1 0
+#define camera cam 20 400 0 -420 -1 0 0 0 1 0

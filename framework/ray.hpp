@@ -20,17 +20,20 @@ struct Ray
 
 	Ray transformRay(glm::mat4 const& mat) const{
 		
-		glm::vec4 origin4(origin.x, origin.y, origin.z, 1.0f);
-		glm::vec4 direction4(direction.x, direction.y, direction.z, 0.0f);
+		Ray ray;
+		glm::vec4 origin4{origin, 1.0f};
+		glm::vec4 direction4{direction, 0.0f};
 		glm::vec4 origin_trans = mat * origin4;
 		glm::vec4 direction_trans = mat * direction4;
 
 		glm::vec3 origin3(origin_trans);
 		glm::vec3 direction3(direction_trans);
 
-		Ray ray(origin3, direction3);
+		ray.origin = origin3;
+		ray.direction = direction3;
 
 		return ray;
+
 	}
 
 };

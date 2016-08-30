@@ -83,7 +83,7 @@ void Renderer::render(std::string const& cam_name){
           if(camHit.type_ == "sphere"){
             lightRay = {camHit.intersec_+ 0.01f * lightVec, lightVec};
           } else if(camHit.type_ == "box"){
-            lightRay = {(camHit.intersec_ + 0.000000001f * lightVec), lightVec};
+            lightRay = {(camHit.intersec_ + 0.0001f * lightVec), lightVec};
           }
           Hit lightHits = findHit(scene_.shapes_, lightRay);
 
@@ -158,7 +158,7 @@ Hit findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
     }
 
   }
-  
+  //firstHit.distance_ = glm::distance(firstHit.intersec_, ray.origin);
   return firstHit;
 
 }

@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
   unsigned const height = 600;
   std::string const filename = "test.ppm";
 
-  SDF_Loader input("../example.txt");
+  SDF_Loader input("../new_scene.txt");
   Scene scene = input.readInput();
 
   Renderer app(width, height, filename, scene);

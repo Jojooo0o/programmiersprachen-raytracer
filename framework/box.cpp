@@ -47,8 +47,8 @@ std::ostream& Box::print(std::ostream& os) const{
 	return os;
 }
 
-Hit Box::intersect (Ray const& original){
-	Ray ray = original.transformRay(inv_);
+Hit Box::intersect (Ray const& original_ray){
+	Ray ray = original_ray.transformRay(inv_);
 	float t0, t1;
 	float tnear = 0.0f;
 	float tfar = 0.0f;
@@ -113,8 +113,10 @@ Hit Box::intersect (Ray const& original){
 		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
 	}
 
-	if(tnear < 0.0) {return hi;}
+	if(tnear < 0.0f && tfar < 0.0f) {return hi;}
+	else if (tnear < 0.0f && tfar >= 0.0f) {tfar = tnear;}
 	
+	distance = tnear * sqrt(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y + ray.direction.z * ray.direction.z);
 	intersec = ray.origin + ray.direction * tnear;
 
 	if(intersec.x == Approx(min_.x)) {normvec = {-1.0f, 0.0f, 0.0f};}
@@ -125,12 +127,17 @@ Hit Box::intersect (Ray const& original){
 	else if (intersec.z == Approx(max_.z)) {normvec = {0.0f, 0.0f, 1.0f};}
 
 	hi.hit_ = hit;
-	hi.distance_ = tnear;
+	hi.distance_ = distance;
 	hi.intersec_ = intersec;
 	hi.normvec_ = normvec;
 	hi.matname_ = material_;
 	hi.type_ = "box";
+
+	std::cout << hi.intersec_.x << " , " << hi.intersec_.y << " , " << hi.intersec_.z << std::endl;
 	hi.transformHit(world_transform_, trans_inv_);
+
+	std::cout << "transformed:" << hi.intersec_.x << " , " << hi.intersec_.y << " , " << hi.intersec_.z << std::endl;
+
 	
 	return hi;
 

@@ -5,8 +5,8 @@ Shape::Shape():
 	name_("Shape"),
 	material_("material"),
 	world_transform_(glm::mat4(1.0f)),
-	inv_(glm::inverse(world_transform_)),
-	trans_inv_(glm::transpose(inv_)) {}
+	inv_(glm::mat4(1.0f)),
+	trans_inv_(glm::mat4(1.0f)) {}
 
 Shape::Shape(std::string const& name, std::string const& material) : 
 	name_(name),
