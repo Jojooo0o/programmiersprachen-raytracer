@@ -7,9 +7,9 @@
 define camera cam 20 300 0 0 -1 0 0 0 1 0
 #define camera cam 20 -300 0 0 1 0 0 0 1 0
 
-define material red 1 0 0 1 0 0 1 0 0 10
-define material blue 0 0 1 0 0 1 0 0 1 100
-define material green 0 1 0 0 1 0 0 1 0 10
+define material red 1 0 0 1 0 0 1 0 0 10 1 1 0
+define material blue 0 0 1 0 0 1 0 0 1 100 0 0 0
+define material green 0 1 0 0 1 0 0 1 0 10 0 1 0.5 
 
 #define light sun 1000 700 500 0.2 0.2 0.2 0.8 0.8 0.8
 #define light sun2 0 0 -1000 0.2 0.2 0.2 0.8 0.8 0.8
@@ -20,6 +20,6 @@ define shape sphere sphere -20 10 0 100 green
 
 transform box rotate 70 1 1 2
 transform sphere scale 1.2
-transform box translate 10 0 0
+transform box translate 10 5 0
 
 #camera buggy

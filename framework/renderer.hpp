@@ -34,6 +34,8 @@ public:
   void render(std::string const&);
   void write(Pixel const& p);
 
+  Color raytrace(Ray const&, int);
+
 
   inline std::vector<Color> const& colorbuffer() const
   {
@@ -49,7 +51,8 @@ private:
   Scene scene_;
 };
 
-Hit findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
+
+  Hit findHit(std::vector<std::shared_ptr<Shape>> const&, Ray const&);
 
 
 #endif // #ifndef BUW_RENDERER_HPP

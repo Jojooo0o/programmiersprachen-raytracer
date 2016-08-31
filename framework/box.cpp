@@ -133,12 +133,7 @@ Hit Box::intersect (Ray const& original_ray){
 	hi.matname_ = material_;
 	hi.type_ = "box";
 
-	std::cout << hi.intersec_.x << " , " << hi.intersec_.y << " , " << hi.intersec_.z << std::endl;
 	hi.transformHit(world_transform_, trans_inv_);
-
-	std::cout << "transformed:" << hi.intersec_.x << " , " << hi.intersec_.y << " , " << hi.intersec_.z << std::endl;
-
-	
 	return hi;
 
 

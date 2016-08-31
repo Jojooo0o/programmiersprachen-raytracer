@@ -4,7 +4,7 @@
 Material SDF_Loader::createMaterial(std::stringstream& line){
 	std::string name;
 	std::string word;
-	float r,g,b,m;
+	float r,g,b,m,t,eta,s;
 
 	line >> word; name = word;
 
@@ -24,8 +24,12 @@ Material SDF_Loader::createMaterial(std::stringstream& line){
 	Color ks {r,g,b};
 
 	line >> word; m = std::stof(word);
+	line >> word; t = std::stof(word);
+	line >> word; eta = std::stof(word);
+	line >> word; s = std::stof(word);
 
-	Material mat {name, ka, kd, ks, m};
+
+	Material mat {name, ka, kd, ks, m, t, eta, s};
 
 	return mat;
 }

@@ -42,6 +42,24 @@ struct Color
     return *this;
   }
 
+  friend Color operator*(Color const& col, float factor)
+  {
+    float r = col.r*factor;
+    float g = col.g*factor;
+    float b = col.b*factor;
+    Color color{r, g, b};
+    return color;
+  }
+
+  friend Color operator*(float factor, Color const& col)
+  {
+    float r = col.r*factor;
+    float g = col.g*factor;
+    float b = col.b*factor;
+    Color color{r, g, b};
+    return color;
+  }
+
   friend Color operator+(Color const& a, Color const& b)
   {
     auto tmp(a);

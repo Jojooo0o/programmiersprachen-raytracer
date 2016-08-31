@@ -56,7 +56,7 @@ void Renderer::render(std::string const& cam_name){
   for(unsigned y = 0; y < height_; ++y){
     for (unsigned x = 0; x < width_; ++x){
       Pixel p(x,y);
-      Color color{};
+      int maxRecursion = 5;
       
       //transform pixel coordinates to camera coordinates     
 
@@ -64,7 +64,8 @@ void Renderer::render(std::string const& cam_name){
       float y1 = ((float)y - half_height)/width;
 
       Ray camRay = cam.createRay(x1, y1);
-      Hit camHit = findHit(scene_.shapes_, camRay);
+      Color color = raytrace(camRay, maxRecursion);
+      /*Hit camHit = findHit(scene_.shapes_, camRay);
 
       if(camHit.hit_ == false){
         color = scene_.ambient_;
@@ -94,6 +95,13 @@ void Renderer::render(std::string const& cam_name){
           glm::vec3 spec_light = glm::reflect(lightVec, camHit.normvec_);
           float r_v_ = pow(glm::dot(glm::normalize(camRay.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
 
+          if(mat.s > 0.0f){
+            glm::vec3 object_reflect = glm::reflect(camRay.direction, camHit.normvec_);
+            Ray reflectionRay{camHit.intersec_, object_reflect};
+
+          }
+
+
           
 
         //Shadows
@@ -104,7 +112,9 @@ void Renderer::render(std::string const& cam_name){
             color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
           }
         }
-      }
+      }*/
+
+
       p.color = color;
       write(p);
       
@@ -164,4 +174,73 @@ Hit findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
   
   return firstHit;
 
+}
+
+Color Renderer::raytrace(Ray const& ray, int maxRecursion){
+
+  maxRecursion --;
+  Color color{};
+  Hit camHit = findHit(scene_.shapes_, ray);
+
+      if(camHit.hit_ == false){
+        color = scene_.ambient_;
+      } else {
+
+        //auto it = camHits.begin();
+        //Hit firstHit = it->second;
+        Material mat = scene_.materials_[camHit.matname_];
+
+        color.r += mat.ka_.r * scene_.ambient_.r; 
+        color.g += mat.ka_.g * scene_.ambient_.g;
+        color.b += mat.ka_.b * scene_.ambient_.b;
+
+        for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
+          glm::vec3 lightVec = (*it).position_ - camHit.intersec_; 
+          lightVec = glm::normalize(lightVec);
+
+
+          Ray lightRay;
+          if(camHit.type_ == "sphere"){
+            lightRay = {camHit.intersec_+ 0.01f * lightVec, lightVec};
+          } else if(camHit.type_ == "box"){
+            lightRay = {(camHit.intersec_ + 0.01f * lightVec), lightVec};
+          }
+          Hit lightHits = findHit(scene_.shapes_, lightRay);
+
+          glm::vec3 spec_light = glm::reflect(lightVec, camHit.normvec_);
+          float r_v_ = pow(glm::dot(glm::normalize(ray.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
+
+          if(!lightHits.hit_){
+            
+            color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
+            color.g += mat.kd_.g * (*it).ld_.g * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.g * r_v_);
+            color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
+          }
+        }
+
+
+         if(maxRecursion > 0){ 
+          if(mat.s_ > 0.0f){
+              glm::vec3 object_reflect = glm::reflect(ray.direction, camHit.normvec_);
+              glm::normalize(object_reflect);
+              Ray reflectionRay{camHit.intersec_+ 0.01f * object_reflect, object_reflect};
+              Color reflectedCol = raytrace(reflectionRay, maxRecursion);
+
+              color +=  mat.s_ * reflectedCol;
+
+          }
+
+        
+         /* if(mat.t_ > 0.0f){
+            //glm::vec3 refraction = glm::refract(ray.direction, camHit.normvec_, mat.eta_);
+            //Ray refractionRay{camHit.intersec_ + 0.01f * refraction, refraction};
+            Ray new_ray{camHit.intersec_ + 0.001f * ray.direction, ray.direction};
+
+            Color refractedCol = raytrace(new_ray, maxRecursion);
+            color = ((1.0f - mat.t_) * color) + (mat.t_ * refractedCol);
+          }*/
+        }
+      }
+
+      return color;
 }
