@@ -50,8 +50,8 @@ std::ostream& Box::print(std::ostream& os) const{
 Hit Box::intersect (Ray const& original_ray){
 	Ray ray = original_ray.transformRay(inv_);
 	float t0, t1;
-	float tnear = 0.0f;
-	float tfar = 0.0f;
+	float tnear;
+	float tfar;
 	bool hit = true;
 	float distance = -1;
 	glm::vec3 normvec;

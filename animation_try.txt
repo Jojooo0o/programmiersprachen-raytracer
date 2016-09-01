@@ -1,0 +1,29 @@
+#CAMERAS
+
+define camera cam 20 0 300 0 0 -1 0 0 0 -1
+#define camera cam 20 0 -300 0 0 1 0 0 0 -1
+#define camera cam 20 0 0 300 0 0 -1 0 1 0
+#define camera cam 20 0 0 -300 0 0 1 0 1 0
+#define camera cam 20 300 0 0 -1 0 0 0 1 0
+#define camera cam 20 -300 0 0 1 0 0 0 1 0
+
+#LIGHTS
+
+define light sun3 0 1000 0 0.2 0.2 0.2 0.8 0.8 0.8
+
+#MATERIALS
+
+define material red 1 0 0 1 0 0 1 0 0 10 0 0 0.5
+define material blue 0 0 1 0 0 1 0 0 1 100 0 0 0
+define material green 0 1 0 0 1 0 0 1 0 10 0 0 0.2
+
+#OBJECTS
+
+define shape sphere sphere -30 0 0 100 green
+
+#TRANSFORMATION
+
+transform sphere rotate 10 0 1 0
+#transform sphere scale 2
+#transform sphere translate 10 5 0
+
