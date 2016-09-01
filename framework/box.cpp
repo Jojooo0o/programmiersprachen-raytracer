@@ -61,8 +61,13 @@ Hit Box::intersect (Ray const& original_ray){
 	// {0,0,0} abfangen
 	if (ray.direction.x == 0 && ray.direction.y == 0 && ray.direction.z == 0) {return hi;}
 
-	if (ray.direction.x != 0.0f)
+	if (ray.direction.x == Approx(0.0f))
 	{
+		
+		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return hi;}
+
+	} else {
+
 		t0 = (min_.x - ray.origin.x) / ray.direction.x;
 		t1 = (max_.x - ray.origin.x) / ray.direction.x;
 		tfar = std::max(t0,t1);
@@ -72,45 +77,62 @@ Hit Box::intersect (Ray const& original_ray){
 		{
 			return hi;
 		}
+		
+	}
+
+	if (ray.direction.y == Approx(0.0f))
+	{
+		
+		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return hi;}
 
 	} else {
 
-		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return hi;}
-	}
-
-	if (ray.direction.y != 0.0f)
-	{
 		t0 = (min_.y - ray.origin.y) / ray.direction.y;
 		t1 = (max_.y - ray.origin.y) / ray.direction.y;
-		tnear = std::max(tnear, std::min(t0,t1));
-		tfar = std::min(tfar, std::max(t0,t1));
 
+		if(ray.direction.x == Approx(0.0f)){
+
+			tfar = std::max(t0,t1);
+			tnear = std::min(t0,t1);
+
+		} else {
+
+			tnear = std::max(tnear, std::min(t0,t1));
+			tfar = std::min(tfar, std::max(t0,t1));
+		}
 		
 		if (tnear > tfar)
 		{
 			return hi;
 		}
-
-	} else {
-
-		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return hi;}
 	}
 
-	if (ray.direction.z != 0.0f)
+	if (ray.direction.z == Approx(0.0f))
 	{
+		
+		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
+
+	} else {
+
 		t0 = (min_.z - ray.origin.z) / ray.direction.z;
 		t1 = (max_.z - ray.origin.z) / ray.direction.z;
-		tnear = std::max(tnear, std::min(t0,t1));
-		tfar = std::min(tfar, std::max(t0,t1));
+
+
+		if(ray.direction.x == Approx(0.0f) && ray.direction.y == Approx(0.0f)){
+
+			tfar = std::max(t0,t1);
+			tnear = std::min(t0,t1);
+			
+		} else {
+
+			tnear = std::max(tnear, std::min(t0,t1));
+			tfar = std::min(tfar, std::max(t0,t1));
+		}
 		
 		if (tnear > tfar)
 		{
 			return hi;
 		}
-
-	} else {
-
-		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
 	}
 
 	if(tnear < 0.0f && tfar < 0.0f) {return hi;}

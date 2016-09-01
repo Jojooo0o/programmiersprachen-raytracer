@@ -211,36 +211,36 @@ Color Renderer::raytrace(Ray const& ray, int maxRecursion){
           float r_v_ = pow(glm::dot(glm::normalize(ray.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
 
           if(!lightHits.hit_){
-            
-            color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
-            color.g += mat.kd_.g * (*it).ld_.g * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.g * r_v_);
-            color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
+              
+              color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
+              color.g += mat.kd_.g * (*it).ld_.g * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.g * r_v_);
+              color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
+            }
+          }
+
+
+           if(maxRecursion > 0){ 
+            if(mat.s_ > 0.0f){
+                glm::vec3 object_reflect = glm::reflect(ray.direction, camHit.normvec_);
+                glm::normalize(object_reflect);
+                Ray reflectionRay{camHit.intersec_+ 0.01f * object_reflect, object_reflect};
+                Color reflectedCol = raytrace(reflectionRay, maxRecursion);
+
+                //color = color * (1.0f - mat.s_);
+                color +=  mat.s_ * reflectedCol;
+
+            }
+
+          
+           /* if(mat.t_ > 0.0f){
+              //glm::vec3 refraction = glm::refract(ray.direction, camHit.normvec_, mat.eta_);
+              //Ray refractionRay{camHit.intersec_ + 0.01f * refraction, refraction};
+              Ray new_ray{camHit.intersec_ + 0.001f * ray.direction, ray.direction};
+              Color refractedCol = raytrace(new_ray, maxRecursion);
+              color = ((1.0f - mat.t_) * color) + (mat.t_ * refractedCol);
+            }*/
           }
         }
 
-
-         if(maxRecursion > 0){ 
-          if(mat.s_ > 0.0f){
-              glm::vec3 object_reflect = glm::reflect(ray.direction, camHit.normvec_);
-              glm::normalize(object_reflect);
-              Ray reflectionRay{camHit.intersec_+ 0.01f * object_reflect, object_reflect};
-              Color reflectedCol = raytrace(reflectionRay, maxRecursion);
-
-              color +=  mat.s_ * reflectedCol;
-
-          }
-
-        
-         /* if(mat.t_ > 0.0f){
-            //glm::vec3 refraction = glm::refract(ray.direction, camHit.normvec_, mat.eta_);
-            //Ray refractionRay{camHit.intersec_ + 0.01f * refraction, refraction};
-            Ray new_ray{camHit.intersec_ + 0.001f * ray.direction, ray.direction};
-
-            Color refractedCol = raytrace(new_ray, maxRecursion);
-            color = ((1.0f - mat.t_) * color) + (mat.t_ * refractedCol);
-          }*/
-        }
-      }
-
-      return color;
-}
+        return color;
+  }
