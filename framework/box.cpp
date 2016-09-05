@@ -65,7 +65,7 @@ Hit Box::intersect (Ray const& original_ray){
 	{
 		
 		if(min_.x > ray.origin.x || max_.x < ray.origin.x) {return hi;}
-
+		//find intersect distance with x coord
 	} else {
 
 		t0 = (min_.x - ray.origin.x) / ray.direction.x;
@@ -77,14 +77,13 @@ Hit Box::intersect (Ray const& original_ray){
 		{
 			return hi;
 		}
-		
 	}
 
 	if (ray.direction.y == Approx(0.0f))
 	{
 		
 		if(min_.y > ray.origin.y || max_.y < ray.origin.y) {return hi;}
-
+		//find intersect distance with y coord
 	} else {
 
 		t0 = (min_.y - ray.origin.y) / ray.direction.y;
@@ -111,7 +110,7 @@ Hit Box::intersect (Ray const& original_ray){
 	{
 		
 		if(min_.z > ray.origin.z || max_.z < ray.origin.z) {return hi;}
-
+		//find intersect distance with z coord
 	} else {
 
 		t0 = (min_.z - ray.origin.z) / ray.direction.z;
@@ -135,12 +134,12 @@ Hit Box::intersect (Ray const& original_ray){
 		}
 	}
 
-	if(tnear < 0.0f && tfar < 0.0f) {return hi;}
-	else if (tnear < 0.0f && tfar >= 0.0f) {tfar = tnear;}
+	if(tnear < 0.0f && tfar < 0.0f) {return hi;} //ray.origin behind box
+	else if (tnear < 0.0f && tfar >= 0.0f) {tfar = tnear;} //ray.origin in box
 	
 	distance = tnear * sqrt(ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y + ray.direction.z * ray.direction.z);
-	intersec = ray.origin + ray.direction * tnear;
-
+	intersec = ray.origin + ray.direction * tnear; 
+	//calc normvector
 	if(intersec.x == Approx(min_.x)) {normvec = {-1.0f, 0.0f, 0.0f};}
 	else if (intersec.x == Approx(max_.x)) {normvec = {1.0f, 0.0f, 0.0f};}
 	else if (intersec.y == Approx(min_.y)) {normvec = {0.0f, -1.0f, 0.0f};}
@@ -148,6 +147,7 @@ Hit Box::intersect (Ray const& original_ray){
 	else if (intersec.z == Approx(min_.z)) {normvec = {0.0f, 0.0f, -1.0f};}
 	else if (intersec.z == Approx(max_.z)) {normvec = {0.0f, 0.0f, 1.0f};}
 
+	//create hit
 	hi.hit_ = hit;
 	hi.distance_ = distance;
 	hi.intersec_ = intersec;
@@ -155,6 +155,7 @@ Hit Box::intersect (Ray const& original_ray){
 	hi.matname_ = material_;
 	hi.type_ = "box";
 
+	//Transform hit back to world coordinates
 	hi.transformHit(world_transform_, trans_inv_);
 	return hi;
 

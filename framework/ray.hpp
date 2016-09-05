@@ -8,16 +8,20 @@ struct Ray
 	glm::vec3 origin;
 	glm::vec3 direction;
 
-	Ray(glm::vec3 const& origin, glm::vec3 const& direction): 
-		origin(origin), 
-		direction(glm::normalize(direction)) {}
-
+	//Standard Constructor
 	Ray(): 
 		origin({0.0f, 0.0f, 0.0f}), 
 		direction({1.0f, 1.0f, 1.0f}) {
 			direction = glm::normalize(direction);
 		}
 
+	//Costum Constructor
+	Ray(glm::vec3 const& origin, glm::vec3 const& direction): 
+		origin(origin), 
+		direction(glm::normalize(direction)) {}
+
+
+	//Transformation + Matrix 
 	Ray transformRay(glm::mat4 const& mat) const{
 		
 		glm::vec4 origin4{origin, 1.0f};

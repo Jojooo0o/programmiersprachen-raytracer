@@ -19,3 +19,9 @@ add_dependencies(try glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
 
 install(TARGETS try DESTINATION .)
 
+add_executable(animation animation.cpp)
+
+target_link_libraries(animation ${FRAMEWORK_NAME} ${LIBRARIES})
+add_dependencies(animation glfw ${FRAMEWORK_NAME} ${COPY_BINARY})
+
+install(TARGETS animation DESTINATION .)

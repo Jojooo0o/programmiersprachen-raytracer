@@ -46,6 +46,7 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
+//Rendering Scene from Cam
 void Renderer::render(std::string const& cam_name){
 
   Camera cam = scene_.cameras_[cam_name];
@@ -60,6 +61,7 @@ void Renderer::render(std::string const& cam_name){
 
       Color color{};
 
+      //Antialiasing
       for(float i = 0.0f; i < 1.0f; i += 0.5f){
         for(float j = 0.0f; j < 1.0f; j += 0.5f){
     
@@ -74,66 +76,7 @@ void Renderer::render(std::string const& cam_name){
           color += 0.25f * subcolor;
         }
       }
-
-
       
-      //transform pixel coordinates to camera coordinates     
-
-      /*float x1 = ((float)x - half_width)/width;
-      float y1 = ((float)y - half_height)/width;
-
-      Ray camRay = cam.createRay(x1, y1);
-      color = raytrace(camRay, maxRecursion);
-      /*Hit camHit = findHit(scene_.shapes_, camRay);
-
-      if(camHit.hit_ == false){
-        color = scene_.ambient_;
-      } else {
-
-        //auto it = camHits.begin();
-        //Hit firstHit = it->second;
-        Material mat = scene_.materials_[camHit.matname_];
-
-        color.r += mat.ka_.r * scene_.ambient_.r; 
-        color.g += mat.ka_.g * scene_.ambient_.g;
-        color.b += mat.ka_.b * scene_.ambient_.b;
-
-        for(auto it = scene_.lights_.begin(); it != scene_.lights_.end(); ++ it){
-          glm::vec3 lightVec = (*it).position_ - camHit.intersec_; 
-          lightVec = glm::normalize(lightVec);
-
-
-          Ray lightRay;
-          if(camHit.type_ == "sphere"){
-            lightRay = {camHit.intersec_+ 0.01f * lightVec, lightVec};
-          } else if(camHit.type_ == "box"){
-            lightRay = {(camHit.intersec_ + 0.01f * lightVec), lightVec};
-          }
-          Hit lightHits = findHit(scene_.shapes_, lightRay);
-
-          glm::vec3 spec_light = glm::reflect(lightVec, camHit.normvec_);
-          float r_v_ = pow(glm::dot(glm::normalize(camRay.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
-
-          if(mat.s > 0.0f){
-            glm::vec3 object_reflect = glm::reflect(camRay.direction, camHit.normvec_);
-            Ray reflectionRay{camHit.intersec_, object_reflect};
-
-          }
-
-
-          
-
-        //Shadows
-          if(!lightHits.hit_){
-            
-            color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
-            color.g += mat.kd_.g * (*it).ld_.g * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.g * r_v_);
-            color.b += mat.kd_.b * (*it).ld_.b * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.b * r_v_);
-          }
-        }
-      }*/
-
-
       p.color = color;
       write(p);
       
@@ -158,23 +101,7 @@ void Renderer::write(Pixel const& p)
   ppm_.write(p);
 }
 
-
-/*std::map<float, Hit> findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
-
-  std::map<float, Hit> hits;
-
-  for(auto it = shapes.begin(); it != shapes.end(); it ++){
-    Hit hit = (**it).intersect(ray);
-    if (hit.hit_){
-     hits[hit.distance_] = hit;
-    }
-
-  }
-  
-  return hits;
-
-}*/
-
+//Returns closest Hit
 Hit findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
 
   Hit firstHit{};
@@ -194,7 +121,7 @@ Hit findHit(std::vector<std::shared_ptr<Shape>> const& shapes, Ray const& ray){
   return firstHit;
 
 }
-
+//Calc Color depending on Ray
 Color Renderer::raytrace(Ray const& ray, int maxRecursion){
 
   maxRecursion --;
@@ -229,6 +156,7 @@ Color Renderer::raytrace(Ray const& ray, int maxRecursion){
           glm::vec3 spec_light = glm::reflect(lightVec, camHit.normvec_);
           float r_v_ = pow(glm::dot(glm::normalize(ray.direction), glm::normalize(spec_light)), mat.m_);  //Spiegelende Reflexion
 
+          //Shadow
           if(!lightHits.hit_){
               
               color.r += mat.kd_.r * (*it).ld_.r * (glm::dot(camHit.normvec_, lightRay.direction) + mat.ks_.r * r_v_);
@@ -245,11 +173,12 @@ Color Renderer::raytrace(Ray const& ray, int maxRecursion){
                 Ray reflectionRay{camHit.intersec_+ 0.01f * object_reflect, object_reflect};
                 Color reflectedCol = raytrace(reflectionRay, maxRecursion);
 
+                //ALTERNATIVE REFLECTION MODEL
                 //color = color * (1.0f - mat.s_);
                 color +=  mat.s_ * reflectedCol;
 
             }
-
+            //REFRACTION FAILED
           
            /* if(mat.t_ > 0.0f){
               //glm::vec3 refraction = glm::refract(ray.direction, camHit.normvec_, mat.eta_);

@@ -16,6 +16,7 @@ Pixel::Pixel(unsigned int a, unsigned int b)
     color(0,0,0)
 {}
 
+//Print Method
 void Pixel::print(std::ostream& os) const
 {
   os << "Pixel[" << (int)x << ',' << (int)y << "]("
@@ -24,6 +25,7 @@ void Pixel::print(std::ostream& os) const
      << color.b << ')';
 }
 
+//Print Operator
 std::ostream& operator<<(std::ostream& os, const Pixel& a)
 {
   std::ostream::sentry cerberus (os);

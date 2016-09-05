@@ -1,6 +1,7 @@
 #include "shape.hpp"
 #include <iostream>
 
+//Standard Constructor
 Shape::Shape():
 	name_("Shape"),
 	material_("material"),
@@ -8,6 +9,7 @@ Shape::Shape():
 	inv_(glm::mat4(1.0f)),
 	trans_inv_(glm::mat4(1.0f)) {}
 
+//Costum Constructor
 Shape::Shape(std::string const& name, std::string const& material) : 
 	name_(name),
 	material_(material),

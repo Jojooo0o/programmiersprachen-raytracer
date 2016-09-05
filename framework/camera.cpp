@@ -1,5 +1,6 @@
 #include "camera.hpp"
 
+//standard constructor
 Camera::Camera():
 		name_("Camera"),
 		angle_(0.0f),
@@ -8,6 +9,7 @@ Camera::Camera():
 		dir_({0.0f, 0.0f, -1.0f}),
 		up_({0.0f, 1.0f, 0.0f}){}
 
+//costum constructor
 Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos):
 	name_(name),
 	angle_(fov),
@@ -19,6 +21,7 @@ Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos):
 		distance_ = 0.5/(std::tan(rad));
 	}
 
+//new costum constructor for moveable cam
 Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos, glm::vec3 const& dir, glm::vec3 const& up):
 	name_(name),
 	angle_(fov),
@@ -30,6 +33,7 @@ Camera::Camera(std::string const& name, float fov, glm::vec3 const& pos, glm::ve
 		distance_ = 0.5/(std::tan(rad));
 	}
 
+//create camMatrix for transformation
 glm::mat4 Camera::createMatrix() {
 	glm::vec3 u = glm::cross(dir_, up_);
 	glm::vec3 v = glm::cross(u, dir_);
@@ -43,26 +47,20 @@ glm::mat4 Camera::createMatrix() {
 	glm::vec4 dir_4(-dir_.x, -dir_.y, -dir_.z, -0.0f);
 	glm::vec4 pos_4(pos_.x, pos_.y, pos_.z, 1.0f);
 	glm::mat4 c(u4, v4, dir_4, pos_4);
-	//glm::mat4 c;
-	//c[0] = u4;
-	//c[1] = v4;
-	//c[2] = dir_4;
-	//c[3] = pos_4;
 
 	return c;
 }
 
+//View Ray creation
 Ray Camera::createRay(float x, float y){
-	//glm::vec4 vector {x, y, -distance_, 0.0f};
 	glm::vec3 origin {0.0f, 0.0f, 0.0f};
 	glm::vec3 direction {x, y, -distance_};
-	//vector = createMatrix() * vector;
-	//glm::vec3 direction {vector.x, vector.y, vector.z};
 	Ray ray{origin, direction};
 	Ray transformed_ray = ray.transformRay(createMatrix());
 	return transformed_ray;
 }
 
+//getter
 std::string Camera::get_name() const{
 	return name_;
 }

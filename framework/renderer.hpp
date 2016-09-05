@@ -31,10 +31,10 @@ public:
   Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene);
 
   void render();
-  void render(std::string const&);
+  void render(std::string const&); //Added
   void write(Pixel const& p);
 
-  Color raytrace(Ray const&, int);
+  Color raytrace(Ray const&, int); //Added
 
 
   inline std::vector<Color> const& colorbuffer() const
@@ -48,7 +48,7 @@ private:
   std::vector<Color> colorbuffer_;
   std::string filename_;
   PpmWriter ppm_;
-  Scene scene_;
+  Scene scene_; //Added
 };
 
 

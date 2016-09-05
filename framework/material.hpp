@@ -7,6 +7,7 @@
 
 struct Material
 {
+  //Standard Constructor
   Material() :
     name_(std::string("Material")), 
     ka_({0.0f, 0.0f, 0.0f}), 
@@ -17,6 +18,7 @@ struct Material
     eta_(0.0f),
     s_(0.0f) {}
 
+  //Costum Constructor
   Material(std::string const& name, Color const& ka, Color const& kd, Color const& ks,  float m, float t, float eta, float s) :
     name_(name), 
     ka_(ka), 
@@ -37,7 +39,7 @@ struct Material
   float s_;
 
 
-
+  //Print Method
   friend std::ostream& operator<<(std::ostream& os, Material const& mat)
   {
     os << mat.name_ << "\nAmbient: " << mat.ka_ << "Diffuse:" << mat.kd_ << "Reflection:" << mat.ks_ << mat.m_ << std::endl;
